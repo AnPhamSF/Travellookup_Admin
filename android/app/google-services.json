@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "650617212741",
+    "project_id": "travellookup-3fda3",
+    "storage_bucket": "travellookup-3fda3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650617212741:android:50c9495d58789011f5382c",
+        "android_client_info": {
+          "package_name": "com.example.travellookup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650617212741-0tbanmsnrd42btsuas5pn4tfqljh1051.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7G1CBGYQ8om2HjjnmP-u1RKQfw0pFn80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650617212741-0tbanmsnrd42btsuas5pn4tfqljh1051.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "650617212741-ff2uuns977q3uskm6ortk5aabtggdf62.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.travellookup.travelLookup"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650617212741:android:ecb8ac5e3fd0c29af5382c",
+        "android_client_info": {
+          "package_name": "com.example.travellookup_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650617212741-0tbanmsnrd42btsuas5pn4tfqljh1051.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7G1CBGYQ8om2HjjnmP-u1RKQfw0pFn80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650617212741-0tbanmsnrd42btsuas5pn4tfqljh1051.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "650617212741-ff2uuns977q3uskm6ortk5aabtggdf62.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.travellookup.travelLookup"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

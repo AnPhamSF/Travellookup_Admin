@@ -1,0 +1,2 @@
+C:/Users/uthit/travellookup_admin/android/app/.cxx/Debug/715md4g2/x86/CMakeFiles/edit_cache.dir
+C:/Users/uthit/travellookup_admin/android/app/.cxx/Debug/715md4g2/x86/CMakeFiles/rebuild_cache.dir
