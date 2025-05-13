@@ -1,6 +1,6 @@
-# TrackBangla Admin Panel  
+# TravelLookUp Admin Panel  
 
-The **TrackBangla Admin Panel** is a powerful management tool for the TrackBangla travel app. It enables administrators to seamlessly manage app content, users, and notifications through an intuitive interface.  
+The **TravelLookUp Admin Panel** is a powerful management tool for the TrackBangla travel app. It enables administrators to seamlessly manage app content, users, and notifications through an intuitive interface.  
 
 ## Features  
 
