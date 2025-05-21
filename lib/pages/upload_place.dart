@@ -1,4 +1,5 @@
 import '../utils/dialog.dart';
+import '../widgets/place_preview.dart';
 import '/blocs/admin_bloc.dart';
 import '/utils/styles.dart';
 //import '/widgets/place_preview.dart';
@@ -167,32 +168,32 @@ class _UploadPlaceState extends State<UploadPlace> {
 
 
 
-  // handlePreview() async{
-  //   if (formKey.currentState!.validate()) {
-  //     formKey.currentState!.save();
-  //     if(paths.isNotEmpty){
-  //       showPlacePreview(
-  //         context, 
-  //         nameCtrl.text, 
-  //         locationCtrl.text, 
-  //         image1Ctrl.text, 
-  //         descriptionCtrl.text, 
-  //         double.parse(latCtrl.text), 
-  //         double.parse(lngCtrl.text), 
-  //         startpointNameCtrl.text, 
-  //         endpointNameCtrl.text, 
-  //         double.parse(startpointLatCtrl.text), 
-  //         double.parse(startpointLngCtrl.text),
-  //         double.parse(endpointLatCtrl.text),
-  //         double.parse(endpointLngCtrl.text),
-  //         priceCtrl.text,
-  //         paths
-  //       );
-  //     }else{
-  //       //openToast(context, 'Path List is Empty!');
-  //     }
-  //   }
-  // }
+  handlePreview() async{
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      if(paths.isNotEmpty){
+        showPlacePreview(
+          context,
+          nameCtrl.text,
+          locationCtrl.text,
+          image1Ctrl.text,
+          descriptionCtrl.text,
+          double.parse(latCtrl.text),
+          double.parse(lngCtrl.text),
+          startpointNameCtrl.text,
+          endpointNameCtrl.text,
+          double.parse(startpointLatCtrl.text),
+          double.parse(startpointLngCtrl.text),
+          double.parse(endpointLatCtrl.text),
+          double.parse(endpointLngCtrl.text),
+          priceCtrl.text,
+          paths
+        );
+      }else{
+        //openToast(context, 'Path List is Empty!');
+      }
+    }
+  }
 
 
 
@@ -509,14 +510,13 @@ class _UploadPlaceState extends State<UploadPlace> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         TextButton.icon(
-                          
                           icon: Icon(Icons.remove_red_eye, size: 25, color: Colors.blueAccent,),
                           label: Text('Preview', style: TextStyle(
                             fontWeight: FontWeight.w400,
                             color: Colors.black
                           ),),
                           onPressed: (){
-                            //handlePreview();
+                            handlePreview();
                           }
                         )
                       ],

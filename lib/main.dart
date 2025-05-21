@@ -4,17 +4,17 @@ import 'package:travellookup_admin/firebase_options.dart';
 import '/pages/home.dart';
 import '/pages/sign_in.dart';
 import 'package:flutter/material.dart';
-//import 'package:provider/provider.daCaused by: java.lang.NoClassDefFoundError: org/gradle/internal/impldep/com/google/common/collect/Listsrt';
+import 'package:toast/toast.dart';
 import '/blocs/admin_bloc.dart';
 import '/blocs/notification_bloc.dart';
 import '/blocs/comment_bloc.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,51 +22,56 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider<AdminBloc>(create: (context) => AdminBloc()),
-      ChangeNotifierProvider<CommentBloc>(create: (context) => CommentBloc()),
-      ChangeNotifierProvider<NotificationBloc>(create: (context) => NotificationBloc())
-
-    ],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AdminBloc>(create: (_) => AdminBloc()),
+        ChangeNotifierProvider<CommentBloc>(create: (_) => CommentBloc()),
+        ChangeNotifierProvider<NotificationBloc>(create: (_) => NotificationBloc()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        builder: (context, child) {
+          ToastContext().init(context);
+          return child!;
+        },
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
           fontFamily: 'Muli',
           appBarTheme: AppBarTheme(
-              color: Colors.white,
-              elevation: 0,
-
-              actionsIconTheme: IconThemeData(
+            color: Colors.white,
+            elevation: 0,
+            actionsIconTheme: IconThemeData(color: Colors.grey[900]),
+            iconTheme: IconThemeData(color: Colors.grey[900]),
+            toolbarTextStyle: TextTheme(
+              titleLarge: TextStyle(
+                fontFamily: 'Muli',
                 color: Colors.grey[900],
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
               ),
-              iconTheme: IconThemeData(
-                  color: Colors.grey[900]
-              ), toolbarTextStyle: TextTheme(
-                titleLarge: TextStyle(fontFamily: 'Muli', color: Colors.grey[900],fontWeight: FontWeight.w700, fontSize: 18),
-              ).bodyMedium, titleTextStyle: TextTheme(
-                titleLarge: TextStyle(fontFamily: 'Muli', color: Colors.grey[900],fontWeight: FontWeight.w700, fontSize: 18),
-              ).titleLarge
+            ).bodyMedium,
+            titleTextStyle: TextTheme(
+              titleLarge: TextStyle(
+                fontFamily: 'Muli',
+                color: Colors.grey[900],
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
+              ),
+            ).titleLarge,
           ),
-
         ),
-        home: MyApp1(),
+        home: const RootPage(),
       ),
-
-
-
-
-
     );
   }
 }
 
-class MyApp1 extends StatelessWidget {
-  const MyApp1({Key? key}) : super(key: key);
+class RootPage extends StatelessWidget {
+  const RootPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final ab = context.watch<AdminBloc>();
-    return ab.isSignedIn == false ? SignInPage() : HomePage();
+    return ab.isSignedIn ? HomePage() : const SignInPage();
   }
 }

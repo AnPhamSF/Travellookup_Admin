@@ -1,7 +1,7 @@
 import '/blocs/admin_bloc.dart';
 import '/models/place.dart';
 import '/pages/comments.dart';
-//import '/pages/update_place.dart';
+import '/pages/update_place.dart'; // Bật lại import UpdatePlace
 import '/utils/cached_image.dart';
 import '/utils/dialog.dart';
 import '/utils/next_screen.dart';
@@ -18,9 +18,7 @@ class PlacesPage extends StatefulWidget {
   _PlacesPageState createState() => _PlacesPageState();
 }
 
-class _PlacesPageState extends State<PlacesPage>{
-
-
+class _PlacesPageState extends State<PlacesPage> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   late ScrollController controller;
   DocumentSnapshot? _lastVisible;
@@ -32,32 +30,31 @@ class _PlacesPageState extends State<PlacesPage>{
 
   @override
   void initState() {
-    controller = new ScrollController()..addListener(_scrollListener);
+    controller = ScrollController()..addListener(_scrollListener);
     super.initState();
     _isLoading = true;
     _getData();
   }
 
-
-
   Future<Null> _getData() async {
     QuerySnapshot data;
-    if (_lastVisible == null)
+    if (_lastVisible == null) {
       data = await firestore
           .collection(collectionName)
           .orderBy('timestamp', descending: true)
           .limit(10)
           .get();
-    else
+    } else {
       data = await firestore
           .collection(collectionName)
           .orderBy('timestamp', descending: true)
           .startAfter([_lastVisible!['timestamp']])
           .limit(10)
           .get();
+    }
 
-    if (data != null && data.docs.length > 0) {
-      _lastVisible = data.docs[data.docs.length - 1];
+    if (data.docs.isNotEmpty) {
+      _lastVisible = data.docs.last;
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -72,8 +69,7 @@ class _PlacesPageState extends State<PlacesPage>{
     return null;
   }
 
-
-  refreshData () {
+  refreshData() {
     setState(() {
       _isLoading = true;
       _snap.clear();
@@ -83,440 +79,262 @@ class _PlacesPageState extends State<PlacesPage>{
     _getData();
   }
 
-
-
-
-
   @override
   void dispose() {
-    super.dispose();
     controller.dispose();
+    super.dispose();
   }
 
-
-
   void _scrollListener() {
-    if (!_isLoading) {
-      if (controller.position.pixels == controller.position.maxScrollExtent) {
-        setState(() => _isLoading = true);
-        _getData();
-      }
+    if (!_isLoading &&
+        controller.position.pixels == controller.position.maxScrollExtent) {
+      setState(() => _isLoading = true);
+      _getData();
     }
   }
 
   navigateToReviewPage(context, timestamp, name) {
-    nextScreenPopuup(context, CommentsPage(collectionName: collectionName, timestamp: timestamp, title: name,));
+    nextScreenPopuup(
+      context,
+      CommentsPage(
+        collectionName: collectionName,
+        timestamp: timestamp,
+        title: name,
+      ),
+    );
   }
-
-
 
   handleDelete(timestamp) {
     final AdminBloc ab = Provider.of<AdminBloc>(context, listen: false);
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
           contentPadding: EdgeInsets.all(50),
           elevation: 0,
           children: <Widget>[
             Text('Delete?',
-
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900)),
-            SizedBox(
-              height: 10,
-            ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            SizedBox(height: 10),
             Text('Want to delete this item from the database?',
-
-                style: TextStyle(
-                    color: Colors.grey[900],
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700)),
-            SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: Row(
-                children: <Widget>[
-                  TextButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25))),
-                    backgroundColor: MaterialStateProperty.all(Colors.purpleAccent)
-                            ),
-                child: Text(
-                  'Yes',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
-                ),
-                onPressed: ()async{
-                  
-                  
-                    await ab.deleteContent(timestamp, collectionName)
-                    .then((value) => ab.decreaseCount('places_count'));
+                style: TextStyle(fontSize: 16)),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.purpleAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  child: Text('Yes', style: TextStyle(color: Colors.white)),
+                  onPressed: () async {
+                    await ab.deleteContent(timestamp, collectionName);
+                    ab.decreaseCount('places_count');
                     refreshData();
                     Navigator.pop(context);
-                    
-
-                
-                },
-              ),
-
-              SizedBox(width: 10),
-
-              TextButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
-                      
-                            ),
-                            backgroundColor: MaterialStateProperty.all(Colors.red)
-                            ),
-                child: Text(
-                  'No',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
+                  },
                 ),
-                onPressed: () => Navigator.pop(context),
-              ),
-                ],
-              )
+                SizedBox(width: 10),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  child: Text('No', style: TextStyle(color: Colors.white)),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
             )
           ],
         );
-
-    });
+      },
+    );
   }
 
-
-
-  
-
-
-
-
-  openFeaturedDialog (String timestamp) {
+  openFeaturedDialog(String timestamp) {
     final AdminBloc ab = Provider.of<AdminBloc>(context, listen: false);
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            contentPadding: EdgeInsets.all(50),
-            elevation: 0,
-            children: <Widget>[
-              Text('Add to Featured',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900)),
-              SizedBox(
-                height: 10,
-              ),
-              Text('Do you Want to add this item to the featured list?',
-                  style: TextStyle(
-                      color: Colors.grey[900],
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700)),
-              SizedBox(
-                height: 30,
-              ),
-              Center(
-                  child: Row(
-                children: <Widget>[
-                  TextButton(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25))),
-                                backgroundColor: MaterialStateProperty.all(Colors.purpleAccent)),
-                    child: Text(
-                      'Yes',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          contentPadding: EdgeInsets.all(50),
+          elevation: 0,
+          children: <Widget>[
+            Text('Add to Featured',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            SizedBox(height: 10),
+            Text('Do you want to add this item to the featured list?',
+                style: TextStyle(fontSize: 16)),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.purpleAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
                     ),
-                    onPressed: () async {
-                      
-                      
-                        await context.read<AdminBloc>().addToFeaturedList(context, timestamp);
-                        Navigator.pop(context);
-                      
-                    },
                   ),
-                  SizedBox(width: 10),
-                  TextButton(
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25)),),
-                                backgroundColor: MaterialStateProperty.all(Colors.red)),
-                    child: Text(
-                      'No',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
+                  child: Text('Yes', style: TextStyle(color: Colors.white)),
+                  onPressed: () async {
+                    await ab.addToFeaturedList(context, timestamp);
+                    Navigator.pop(context);
+                  },
+                ),
+                SizedBox(width: 10),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
                     ),
-                    onPressed: () => Navigator.pop(context),
                   ),
-                ],
-              ))
-            ],
-          );
-        });
+                  child: Text('No', style: TextStyle(color: Colors.white)),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.05,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              'Places',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
-            ),
-          ],
-        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+        Text('Places',
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
         Container(
           margin: EdgeInsets.only(top: 5, bottom: 10),
           height: 3,
           width: 50,
           decoration: BoxDecoration(
-              color: Colors.indigoAccent,
-              borderRadius: BorderRadius.circular(15)),
+            color: Colors.indigoAccent,
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
-        
         Expanded(
           child: RefreshIndicator(
-
+            onRefresh: () async => refreshData(),
             child: ListView.builder(
-              padding: EdgeInsets.only(top: 30, bottom: 20),
               controller: controller,
-              physics: AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(vertical: 20),
               itemCount: _data.length + 1,
-              itemBuilder: (_, int index) {
+              itemBuilder: (context, index) {
                 if (index < _data.length) {
                   return dataList(_data[index]);
                 }
                 return Center(
-                  child: new Opacity(
+                  child: Opacity(
                     opacity: _isLoading ? 1.0 : 0.0,
-                    child: new SizedBox(
-                        width: 32.0,
-                        height: 32.0,
-                        child: new CircularProgressIndicator()),
+                    child: CircularProgressIndicator(),
                   ),
                 );
               },
             ),
-            onRefresh: () async {
-              
-                refreshData();
-              
-            },
           ),
         ),
       ],
     );
   }
 
- 
- 
- 
- 
   Widget dataList(Place d) {
     return Container(
       padding: EdgeInsets.all(15),
-      margin: EdgeInsets.only(top: 5, bottom: 5),
+      margin: EdgeInsets.symmetric(vertical: 5),
       height: 165,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10)),
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Row(
-        children: <Widget>[
+        children: [
           Container(
             height: 130,
             width: 130,
             decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(10),),
-            child: CustomCacheImage(imageUrl: d.imageUrl1, radius: 10,),
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: CustomCacheImage(imageUrl: d.imageUrl1, radius: 10),
           ),
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 15,
-                left: 15,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        d.name,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
+          SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  d.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  children: [
+                    Icon(LineIcons.mapMarker, size: 15, color: Colors.grey),
+                    SizedBox(width: 3),
+                    Text(d.location, style: TextStyle(fontSize: 12)),
+                    SizedBox(width: 10),
+                    Icon(Icons.access_time, size: 15, color: Colors.grey),
+                    SizedBox(width: 3),
+                    Text(d.date, style: TextStyle(fontSize: 12)),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Container(
+                      height: 35,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Icon(LineIcons.mapMarker, size: 15, color: Colors.grey),
-                      SizedBox(
-                        width: 2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.star, size: 16, color: Colors.grey),
+                          Text('${d.loves}',
+                              style: TextStyle(fontSize: 13, color: Colors.grey)),
+                        ],
                       ),
-                      Text(
-                        d.location,
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      SizedBox(width: 10),
-                      Icon(Icons.access_time, size: 15, color: Colors.grey),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      Text(
-                        d.date,
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Container(
-                        height: 35,
-                        width: 60,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.star,
-                              size: 16,
-                              color: Colors.grey,
-                            ),
-                            Text(
-                              d.loves.toString(),
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 13),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      InkWell(
-                        child: Container(
-                        height: 35,
-                        width: 60,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.comment,
-                              size: 16,
-                              color: Colors.grey[800],
-                            ),
-                            Text(
-                              d.commentsCount.toString(),
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 13),
-                            )
-                          ],
-                        ),
-                      ),
-                        onTap: () {
-                          navigateToReviewPage(context, d.timestamp, d.name);
-                        },
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      
-                      InkWell(
-                        child: Container(
-                            height: 35,
-                            width: 45,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Icon(Icons.edit,
-                                size: 16, color: Colors.grey[800])),
-                        onTap: () {
-                          //nextScreen(context, UpdatePlace(placeData: d));
-                        },
-                      ),
-                      SizedBox(width: 10),
-                      InkWell(
-                        child: Container(
-                            height: 35,
-                            width: 45,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Icon(Icons.delete,
-                                size: 16, color: Colors.grey[800])),
-                        onTap: () {
-                          handleDelete(d.timestamp);
-                        },
-                      ),
-
-                      SizedBox(width: 10),
-
-                      Container(
-                        height: 35,
-                        padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.grey[100],
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(30)),
-                        child: TextButton.icon(
-                            onPressed: () => openFeaturedDialog(d.timestamp),
-                            icon: Icon(LineIcons.plus),
-                            label: Text('Add to Featured')),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    SizedBox(width: 10),
+                    IconButton(
+                      icon: Icon(Icons.edit, size: 20, color: Colors.grey[800]),
+                      onPressed: () => nextScreen(context, UpdatePlace(placeData: d)),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.comment, size: 20, color: Colors.grey),
+                      onPressed: () => navigateToReviewPage(context, d.timestamp, d.name),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.featured_play_list_outlined,
+                          size: 20, color: Colors.purple),
+                      onPressed: () => openFeaturedDialog(d.timestamp),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete, size: 20, color: Colors.red),
+                      onPressed: () => handleDelete(d.timestamp),
+                    ),
+                  ],
+                )
+              ],
             ),
           )
         ],
       ),
     );
   }
-
 }

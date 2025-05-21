@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminBloc extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  String _adminPass = '123456';
+  String _adminPass =  "" ;
   String _userType = 'admin';
   bool _isSignedIn = false;
   bool _testing = false;
@@ -63,7 +63,7 @@ class AdminBloc extends ChangeNotifier {
         .doc('user type')
         .get()
         .then((DocumentSnapshot snap) {
-      String _aPass = snap['admin_password'];
+      String _aPass = snap['admin password'];
       _adminPass = _aPass;
       notifyListeners();
     });
