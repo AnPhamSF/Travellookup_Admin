@@ -1,3 +1,4 @@
+import '../utils/dialog.dart';
 import '/blocs/admin_bloc.dart';
 import '/models/place.dart';
 //import '/utils/dialog.dart';
@@ -85,21 +86,21 @@ class _UpdatePlaceState extends State<UpdatePlace> {
   void handleSubmit() async {
     final AdminBloc ab = Provider.of<AdminBloc>(context, listen: false);
     if(stateSelection == null){
-      //openDialog(context, 'Select City First', '');
+      openDialog(context, 'Select City First', '');
     }else{
       if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       if(paths.isEmpty){
-        //openSnacbar(scaffoldKey, 'Paths List can not be empty');
+        openSnacbar(scaffoldKey, 'Paths List can not be empty');
       } else {
         if (ab.userType == 'tester') {
-        //openDialog(context, 'You are a Tester', 'Only Admin can upload, delete & modify contents');
+        openDialog(context, 'You are a Tester', 'Only Admin can upload, delete & modify contents');
       } else {
         setState(()=> uploadStarted = true);
         await saveToDatabase();
         setState(()=> uploadStarted = false);
-        //openDialog(context, 'Updated Successfully', '');
-        //clearFields();
+        openDialog(context, 'Updated Successfully', '');
+        clearFields();
       }
       }
       
@@ -569,7 +570,7 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                                 fontWeight: FontWeight.w600),
                           ),
                           onPressed: () async{
-                            //handleSubmit();
+                            handleSubmit();
                             
                           })
                         

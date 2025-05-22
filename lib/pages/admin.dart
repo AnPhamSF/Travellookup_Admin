@@ -20,25 +20,26 @@ class _AdminPageState extends State<AdminPage> {
   bool changeStarted = false;
 
 
-  Future handleChange () async{
+  Future handleChange () async {
     final ab = context.read<AdminBloc>();
-    if(ab.userType == 'tester'){
-      //openDialog(context, 'You are a Tester', 'Only Admin can upload, delete & modify contents');
-    }else
-    {
-      if(formKey.currentState!.validate()){
-      formKey.currentState!.save();
-      setState(() {
-        changeStarted = true;
-      });
-      await context.read<AdminBloc>().saveNewAdminPassword(passwordNewCtrl.text);
-      // .then((value) => openDialog(context, 'Password has changed successfully!', ''));
-      setState(() {
-        changeStarted = false;
-      });
-      clearTextFields();
+    if (ab.userType == 'tester') {
+       openDialog(context, 'You are a Tester', 'Only Admin can upload, delete & modify contents');
+    } else {
+      if (formKey.currentState!.validate()) {
+        formKey.currentState!.save();
+        setState(() {
+          changeStarted = true;
+        });
 
-    }
+        await context.read<AdminBloc>().saveNewAdminPassword(passwordNewCtrl.text)
+            .then((value) => openDialog(context, 'Password has changed successfully!', ''));
+
+        setState(() {
+          changeStarted = false;
+        });
+
+        clearTextFields();
+      }
     }
   }
 
@@ -61,18 +62,18 @@ class _AdminPageState extends State<AdminPage> {
           SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
           ),
-          Text("Change Admin Password", style: TextStyle(
+          const Text("Change Admin Password", style: TextStyle(
             fontSize: 25, fontWeight: FontWeight.w800
           ),),
           Container(
-              margin: EdgeInsets.only(top: 5, bottom: 10),
+              margin: const EdgeInsets.only(top: 5, bottom: 10),
               height: 3,
               width: 50,
               decoration: BoxDecoration(
                   color: Colors.indigoAccent,
                   borderRadius: BorderRadius.circular(15)),
             ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
           Form(
@@ -88,7 +89,7 @@ class _AdminPageState extends State<AdminPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 TextFormField(
                   controller: passwordNewCtrl,
                   decoration: inputDecoration('Enter new password', 'New Password', passwordNewCtrl),
@@ -102,7 +103,7 @@ class _AdminPageState extends State<AdminPage> {
                 ),
 
 
-                SizedBox(height: 200,),
+                const SizedBox(height: 200,),
 
 
                 Container(
@@ -110,11 +111,11 @@ class _AdminPageState extends State<AdminPage> {
                     color: Colors.deepPurpleAccent,
                     height: 45,
                     child: changeStarted == true
-                      ? Center(child: Container(height: 30, width: 30,child: CircularProgressIndicator()),)
+                      ? Center(child: Container(height: 30, width: 30,child: const CircularProgressIndicator()),)
                       : TextButton(
-                        child: Text(
+                        child: const Text(
                           'Update Password',
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.w600),

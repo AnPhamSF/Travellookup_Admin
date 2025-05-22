@@ -11,7 +11,7 @@ Future showBlogPreview(context, String title, String description, String thumbna
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: Container(
+          child: SizedBox(
             
             width: MediaQuery.of(context).size.width * 0.50,
             child: ListView(
@@ -30,12 +30,12 @@ Future showBlogPreview(context, String title, String description, String thumbna
                   top: 10,
                   right: 20,
                   child: CircleAvatar(
-                    child: IconButton(icon: Icon(Icons.close), onPressed:() => Navigator.pop(context) ),
+                    child: IconButton(icon: const Icon(Icons.close), onPressed:() => Navigator.pop(context) ),
                   ),
                 )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
 
@@ -67,17 +67,17 @@ Future showBlogPreview(context, String title, String description, String thumbna
                       ],
                     ),
 
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
 
                     Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
                         color: Colors.black),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 5, bottom: 10),
+                    margin: const EdgeInsets.only(top: 5, bottom: 10),
                     height: 3,
                     width: 100,
                     decoration: BoxDecoration(
@@ -87,16 +87,16 @@ Future showBlogPreview(context, String title, String description, String thumbna
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Icon(Icons.favorite, size: 16, color: Colors.grey),
-                      Text(loves.toString(), style: TextStyle(color: Colors.grey, fontSize: 13),),
-                      SizedBox(width: 15,),
-                      Icon(Icons.access_time, size: 16, color: Colors.grey),
-                      Text(date, style: TextStyle(color: Colors.grey, fontSize: 13),),
+                      const Icon(Icons.favorite, size: 16, color: Colors.grey),
+                      Text(loves.toString(), style: const TextStyle(color: Colors.grey, fontSize: 13),),
+                      const SizedBox(width: 15,),
+                      const Icon(Icons.access_time, size: 16, color: Colors.grey),
+                      Text(date, style: const TextStyle(color: Colors.grey, fontSize: 13),),
                       
 
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Html(
@@ -150,7 +150,7 @@ Future showBlogPreview(context, String title, String description, String thumbna
                   ],
                   ),
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 
               ],
             ),

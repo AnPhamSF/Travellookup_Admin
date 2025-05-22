@@ -4,5 +4,5 @@ class Config{
 
   //firebase server token for push notication
   final String serverToken = '';
-  final String icon = 'assets/images/icon.png'; // app icon
+  final String icon = 'assets/images/flight.png'; // app icon
 }

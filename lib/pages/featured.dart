@@ -1,3 +1,5 @@
+import 'package:travellookup_admin/pages/update_place.dart';
+
 import '/blocs/admin_bloc.dart';
 import '/models/place.dart';
 import '/pages/comments.dart';
@@ -67,7 +69,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
       }
     } else {
       setState(() => _isLoading = false);
-      //openToast(context, 'No more content available');
+      openToast(context, 'No more content available');
     }
     return null;
 
@@ -111,15 +113,15 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            contentPadding: EdgeInsets.all(50),
+            contentPadding: const EdgeInsets.all(50),
             elevation: 0,
             children: <Widget>[
-              Text('Remove from Featured',
+              const Text('Remove from Featured',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.w900)),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text('Do you want to remove this item from the featured list?',
@@ -127,7 +129,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                       color: Colors.grey[900],
                       fontSize: 16,
                       fontWeight: FontWeight.w700)),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Center(
@@ -142,7 +144,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                                     
                                     backgroundColor: MaterialStateProperty.all(Colors.purpleAccent)
                                     ),
-                    child: Text(
+                    child: const Text(
                       'Yes',
                       style: TextStyle(
                           color: Colors.white,
@@ -160,7 +162,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                       }
                     },
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   TextButton(
                     style: ButtonStyle(
                         shape:
@@ -168,7 +170,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25))),
                                     backgroundColor: MaterialStateProperty.all(Colors.red)),
-                    child: Text(
+                    child: const Text(
                       'No',
                       style: TextStyle(
                           color: Colors.white,
@@ -199,7 +201,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.05,
         ),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -209,7 +211,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
           ],
         ),
         Container(
-          margin: EdgeInsets.only(top: 5, bottom: 10),
+          margin: const EdgeInsets.only(top: 5, bottom: 10),
           height: 3,
           width: 50,
           decoration: BoxDecoration(
@@ -219,8 +221,8 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
         Expanded(
           child: RefreshIndicator(
             child: ListView.builder(
-              padding: EdgeInsets.only(top: 30, bottom: 20),
-              physics: AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(top: 30, bottom: 20),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemCount: _data.length + 1,
               itemBuilder: (_, int index) {
                 if (index < _data.length) {
@@ -251,8 +253,8 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
 
   Widget dataList(Place d) {
     return Container(
-      padding: EdgeInsets.all(15),
-      margin: EdgeInsets.only(top: 5, bottom: 5),
+      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.only(top: 5, bottom: 5),
       height: 165,
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
@@ -283,37 +285,37 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                         d.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Icon(LineIcons.mapMarker, size: 15, color: Colors.grey),
-                      SizedBox(
+                      const Icon(LineIcons.mapMarker, size: 15, color: Colors.grey),
+                      const SizedBox(
                         width: 2,
                       ),
                       Text(
                         d.location,
-                        style: TextStyle(fontSize: 12),
+                        style: const TextStyle(fontSize: 12),
                       ),
-                      SizedBox(width: 10),
-                      Icon(Icons.access_time, size: 15, color: Colors.grey),
-                      SizedBox(
+                      const SizedBox(width: 10),
+                      const Icon(Icons.access_time, size: 15, color: Colors.grey),
+                      const SizedBox(
                         width: 2,
                       ),
                       Text(
                         d.date,
-                        style: TextStyle(fontSize: 12),
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -327,7 +329,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(
+                            const Icon(
                               Icons.favorite,
                               size: 16,
                               color: Colors.grey,
@@ -335,12 +337,12 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                             Text(
                               d.loves.toString(),
                               style:
-                                  TextStyle(color: Colors.grey, fontSize: 13),
+                                  const TextStyle(color: Colors.grey, fontSize: 13),
                             )
                           ],
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       InkWell(
                         child: Container(
                           height: 35,
@@ -359,7 +361,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                         },
                       ),
                       
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       InkWell(
                         child: Container(
                             height: 35,
@@ -370,22 +372,22 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                             child: Icon(Icons.edit,
                                 size: 16, color: Colors.grey[800])),
                         onTap: () {
-                          //nextScreen(context, UpdatePlace(placeData: d));
+                          nextScreen(context, UpdatePlace(placeData: d));
                         },
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
 
                       Container(
                         height: 35,
-                        padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+                        padding: const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
                         decoration: BoxDecoration(
                             color: Colors.grey[100],
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(30)),
                         child: TextButton.icon(
                             onPressed: () => openFeaturedDialog(d.timestamp),
-                            icon: Icon(LineIcons.removeFormat),
-                            label: Text('Remove from featured')),
+                            icon: const Icon(LineIcons.removeFormat),
+                            label: const Text('Remove from featured')),
                       ),
                       
                       

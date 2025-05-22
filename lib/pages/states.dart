@@ -108,16 +108,16 @@ class _CitiesPageState extends State<States> {
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-          contentPadding: EdgeInsets.all(50),
+          contentPadding: const EdgeInsets.all(50),
           elevation: 0,
           children: <Widget>[
-            Text('Delete?',
+            const Text('Delete?',
                 
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.w900)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text('Want to delete this item from the database?',
@@ -126,7 +126,7 @@ class _CitiesPageState extends State<States> {
                     color: Colors.grey[900],
                     fontSize: 16,
                     fontWeight: FontWeight.w700)),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Center(
@@ -139,7 +139,7 @@ class _CitiesPageState extends State<States> {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25)))),
-                child: Text(
+                child: const Text(
                   'Yes',
                   style: TextStyle(
                       color: Colors.white,
@@ -165,7 +165,7 @@ class _CitiesPageState extends State<States> {
                 },
               ),
 
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
 
               TextButton(
                 style: ButtonStyle(
@@ -174,7 +174,7 @@ class _CitiesPageState extends State<States> {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25)))),
-                child: Text(
+                child: const Text(
                   'No',
                   style: TextStyle(
                       color: Colors.white,
@@ -204,14 +204,14 @@ class _CitiesPageState extends State<States> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               'States',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
             ),
             Container(
               width: 300,
               height: 40,
-              padding: EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               decoration: BoxDecoration(
                   color: Colors.grey[100],
                   border: Border.all(color: Colors.grey),
@@ -220,31 +220,31 @@ class _CitiesPageState extends State<States> {
                 onPressed: (){
                   openAddDialog();
                 }, 
-                icon: Icon(LineIcons.list), 
-                label: Text('Add State/Division')),
+                icon: const Icon(LineIcons.list),
+                label: const Text('Add State/Division')),
                 
             ),
           ],
         ),
         Container(
-          margin: EdgeInsets.only(top: 5, bottom: 10),
+          margin: const EdgeInsets.only(top: 5, bottom: 10),
           height: 3,
           width: 50,
           decoration: BoxDecoration(
               color: Colors.indigoAccent,
               borderRadius: BorderRadius.circular(15)),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         Expanded(
           child: RefreshIndicator(
             child: ListView.separated(
-              padding: EdgeInsets.only(top: 30, bottom: 20),
+              padding: const EdgeInsets.only(top: 30, bottom: 20),
               controller: controller,
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemCount: _data.length + 1,
-              separatorBuilder: (BuildContext context, int index) => SizedBox(height: 10,),
+              separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 10,),
               itemBuilder: (_, int index) {
                 if (index < _data.length) {
                   return dataList(_data[index]);
@@ -277,7 +277,7 @@ class _CitiesPageState extends State<States> {
   Widget dataList(StateModel d) {
     return Container(
           height: 130,
-          padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
           decoration: BoxDecoration(
             color: Colors.grey[200],
             borderRadius: BorderRadius.circular(10),
@@ -293,13 +293,13 @@ class _CitiesPageState extends State<States> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Spacer(),
-              Text(d.name, style: TextStyle(
+              const Spacer(),
+              Text(d.name, style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
                 color: Colors.white
               ),),
-              Spacer(),
+              const Spacer(),
               InkWell(
                child: Container(
                         height: 35,
@@ -387,10 +387,10 @@ class _CitiesPageState extends State<States> {
       context: context,
       builder: (context){
         return SimpleDialog(
-            contentPadding: EdgeInsets.all(100),
+            contentPadding: const EdgeInsets.all(100),
             children: <Widget>[
-              Text('Add State/Division to Database', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
-              SizedBox(height: 50,),
+              const Text('Add State/Division to Database', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
+              const SizedBox(height: 50,),
               Form(
                 key: formKey,
                 child: Column(children: <Widget>[
@@ -406,7 +406,7 @@ class _CitiesPageState extends State<States> {
 
                   
 
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
 
                   TextFormField(
                   decoration: inputDecoration('Enter Thumbnail Url', 'Thumbnail Url', thumbnailCtrl),
@@ -418,14 +418,7 @@ class _CitiesPageState extends State<States> {
                   
                   ),
 
-                  
-
-                  
-                
-                  
-
-
-                SizedBox(height: 50,),
+                const SizedBox(height: 50,),
 
                 Center(
                 child: Row(
@@ -439,7 +432,7 @@ class _CitiesPageState extends State<States> {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25)))),
-                child: Text(
+                child: const Text(
                   'Add State/Division/City',
                   style: TextStyle(
                       color: Colors.white,
@@ -458,7 +451,7 @@ class _CitiesPageState extends State<States> {
                 },
               ),
 
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
 
               TextButton(
                 style: ButtonStyle(
@@ -467,7 +460,7 @@ class _CitiesPageState extends State<States> {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25)))),
-                child: Text(
+                child: const Text(
                   'Cancel',
                   style: TextStyle(
                       color: Colors.white,
@@ -487,6 +480,5 @@ class _CitiesPageState extends State<States> {
       }
     );
   }
-
 
 }

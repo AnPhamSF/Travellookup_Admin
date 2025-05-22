@@ -29,7 +29,7 @@ showPlacePreview(
               children: <Widget>[
                 Stack(
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       height: 350,
                       width: MediaQuery.of(context).size.width,
                       child: CustomCacheImage(imageUrl: imageUrl_1, radius: 0.0)
@@ -42,13 +42,13 @@ showPlacePreview(
                       right: 20,
                       child: CircleAvatar(
                         child: IconButton(
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                             onPressed: () => Navigator.pop(context)),
                       ),
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
@@ -59,13 +59,13 @@ showPlacePreview(
                     children: <Widget>[
                       Text(
                         name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                             color: Colors.black),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 10),
+                        margin: const EdgeInsets.only(top: 5, bottom: 10),
                         height: 3,
                         width: 100,
                         decoration: BoxDecoration(
@@ -75,18 +75,18 @@ showPlacePreview(
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Icon(Icons.location_on, size: 16, color: Colors.grey),
+                          const Icon(Icons.location_on, size: 16, color: Colors.grey),
                           Text(
                             location,
-                            style: TextStyle(color: Colors.grey, fontSize: 13),
+                            style: const TextStyle(color: Colors.grey, fontSize: 13),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 15,
                           ),
                           RichText(
                               text: TextSpan(
                                   text: 'Latitude: ',
-                                  style: TextStyle(color: Colors.grey),
+                                  style: const TextStyle(color: Colors.grey),
                                   children: <TextSpan>[
                                 TextSpan(
                                     text: lat.toString(),
@@ -94,13 +94,13 @@ showPlacePreview(
                                         fontWeight: FontWeight.w700,
                                         color: Colors.grey[700])),
                               ])),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           RichText(
                               text: TextSpan(
                                   text: 'Longitude: ',
-                                  style: TextStyle(color: Colors.grey),
+                                  style: const TextStyle(color: Colors.grey),
                                   children: <TextSpan>[
                                 TextSpan(
                                     text: lng.toString(),
@@ -110,7 +110,7 @@ showPlacePreview(
                               ])),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Html(
@@ -144,17 +144,17 @@ showPlacePreview(
                                 fontWeight: FontWeight.w700,
                                 color: Colors.grey[900]),
                           },
-                          data: '''$description'''),
-                      SizedBox(
+                          data: description),
+                      const SizedBox(
                         height: 20,
                       ),
-                      Text('Guide Details',
+                      const Text('Guide Details',
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.black,
                               fontWeight: FontWeight.w800)),
                       Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 10),
+                        margin: const EdgeInsets.only(top: 5, bottom: 10),
                         height: 3,
                         width: 50,
                         decoration: BoxDecoration(
@@ -167,7 +167,7 @@ showPlacePreview(
                           RichText(
                               text: TextSpan(
                                   text: 'Startpoint Name: ',
-                                  style: TextStyle(color: Colors.grey),
+                                  style: const TextStyle(color: Colors.grey),
                                   children: <TextSpan>[
                                 TextSpan(
                                     text: startpointName,
@@ -175,11 +175,11 @@ showPlacePreview(
                                         fontWeight: FontWeight.w700,
                                         color: Colors.grey[700])),
                               ])),
-                          Spacer(),
+                          const Spacer(),
                           RichText(
                               text: TextSpan(
                                   text: 'Endpoint Name: ',
-                                  style: TextStyle(color: Colors.grey),
+                                  style: const TextStyle(color: Colors.grey),
                                   children: <TextSpan>[
                                 TextSpan(
                                     text: endpointName,
@@ -189,7 +189,7 @@ showPlacePreview(
                               ])),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -198,7 +198,7 @@ showPlacePreview(
                           RichText(
                               text: TextSpan(
                                   text: 'Startpoint Latitude: ',
-                                  style: TextStyle(color: Colors.grey),
+                                  style: const TextStyle(color: Colors.grey),
                                   children: <TextSpan>[
                                 TextSpan(
                                     text: startpointLat.toString(),
@@ -206,11 +206,11 @@ showPlacePreview(
                                         fontWeight: FontWeight.w700,
                                         color: Colors.grey[700])),
                               ])),
-                          Spacer(),
+                          const Spacer(),
                           RichText(
                               text: TextSpan(
                                   text: 'Startpoint Longitude: ',
-                                  style: TextStyle(color: Colors.grey),
+                                  style: const TextStyle(color: Colors.grey),
                                   children: <TextSpan>[
                                 TextSpan(
                                     text: startpointLng.toString(),
@@ -220,7 +220,7 @@ showPlacePreview(
                               ])),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Row(
@@ -229,7 +229,7 @@ showPlacePreview(
                           RichText(
                               text: TextSpan(
                                   text: 'Endpoint Latitude: ',
-                                  style: TextStyle(color: Colors.grey),
+                                  style: const TextStyle(color: Colors.grey),
                                   children: <TextSpan>[
                                 TextSpan(
                                     text: endpointLat.toString(),
@@ -237,11 +237,11 @@ showPlacePreview(
                                         fontWeight: FontWeight.w700,
                                         color: Colors.grey[700])),
                               ])),
-                          Spacer(),
+                          const Spacer(),
                           RichText(
                               text: TextSpan(
                                   text: 'Endpoint Longitude: ',
-                                  style: TextStyle(color: Colors.grey),
+                                  style: const TextStyle(color: Colors.grey),
                                   children: <TextSpan>[
                                 TextSpan(
                                     text: endpointLng.toString(),
@@ -251,13 +251,13 @@ showPlacePreview(
                               ])),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       RichText(
                           text: TextSpan(
                               text: 'Estimated Cost: ',
-                              style: TextStyle(color: Colors.grey),
+                              style: const TextStyle(color: Colors.grey),
                               children: <TextSpan>[
                             TextSpan(
                                 text: price,
@@ -265,16 +265,16 @@ showPlacePreview(
                                     fontWeight: FontWeight.w700,
                                     color: Colors.grey[700])),
                           ])),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
-                      Text('Paths',
+                      const Text('Paths',
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.black,
                               fontWeight: FontWeight.w800)),
                       Container(
-                        margin: EdgeInsets.only(top: 5, bottom: 10),
+                        margin: const EdgeInsets.only(top: 5, bottom: 10),
                         height: 2,
                         width: 20,
                         decoration: BoxDecoration(
@@ -283,12 +283,12 @@ showPlacePreview(
                       ),
                       Container(
                         child: paths.length == 0
-                            ? Center(
+                            ? const Center(
                                 child: Text('No path list were added'),
                               )
                             : ListView.builder(
                                 shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount: paths.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   return ListTile(
@@ -303,7 +303,7 @@ showPlacePreview(
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ],

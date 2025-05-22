@@ -1,8 +1,9 @@
 import '../utils/dialog.dart';
+import '../utils/toast.dart';
 import '../widgets/place_preview.dart';
 import '/blocs/admin_bloc.dart';
 import '/utils/styles.dart';
-//import '/widgets/place_preview.dart';
+import '/widgets/place_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -190,7 +191,7 @@ class _UploadPlaceState extends State<UploadPlace> {
           paths
         );
       }else{
-        //openToast(context, 'Path List is Empty!');
+        openToast(context, 'Path List is Empty!');
       }
     }
   }
@@ -206,12 +207,12 @@ class _UploadPlaceState extends State<UploadPlace> {
             key: formKey,
             child: ListView(children: <Widget>[
               SizedBox(height: h * 0.10,),
-              Text('Place Details', style: TextStyle(
+              const Text('Place Details', style: TextStyle(
                 fontSize: 30, fontWeight: FontWeight.w800
               ),),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               statesDropdown(),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               TextFormField(
                 decoration: inputDecoration('Enter place name', 'Place name', nameCtrl),
                 controller: nameCtrl,
@@ -220,7 +221,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                 },
                 
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               TextFormField(
                 decoration: inputDecoration('Enter location name', 'Location name', locationCtrl),
                 controller: locationCtrl,
@@ -230,7 +231,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                 },
                 
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               
 
               Row(
@@ -246,7 +247,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                 
               ),
             ),
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               Expanded(
                             child: TextFormField(
                   decoration: inputDecoration('Enter Longitude', 'Longitude', lngCtrl),
@@ -262,7 +263,7 @@ class _UploadPlaceState extends State<UploadPlace> {
               
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
 
               TextFormField(
@@ -273,7 +274,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                 },
                 
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               TextFormField(
                 decoration: inputDecoration('Enter image url', 'Image2', image2Ctrl),
                 controller: image2Ctrl,
@@ -282,7 +283,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                 },
                 
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               TextFormField(
                 decoration: inputDecoration('Enter image url', 'Image3', image3Ctrl),
                 controller: image3Ctrl,
@@ -291,19 +292,19 @@ class _UploadPlaceState extends State<UploadPlace> {
                 },
                 
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               TextFormField(
                 decoration: InputDecoration(
                   hintText: 'Enter place details (Html or Normal Text)',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: 'Place details',
-                  contentPadding: EdgeInsets.only(right: 0, left: 10, top: 15, bottom: 5),
+                  contentPadding: const EdgeInsets.only(right: 0, left: 10, top: 15, bottom: 5),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CircleAvatar(
                       radius: 15,
                       backgroundColor: Colors.grey[300],
-                      child: IconButton(icon: Icon(Icons.close, size: 15), onPressed: (){
+                      child: IconButton(icon: const Icon(Icons.close, size: 15), onPressed: (){
                         descriptionCtrl.clear();
                       }),
                     ),
@@ -320,11 +321,11 @@ class _UploadPlaceState extends State<UploadPlace> {
                 },
                 
               ),
-              SizedBox(height: 50,),
-              Text('Travel Guide Details', style: TextStyle(
+              const SizedBox(height: 50,),
+              const Text('Travel Guide Details', style: TextStyle(
                 fontSize: 30, fontWeight: FontWeight.w800
               ),),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
 
               Row(
@@ -340,7 +341,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                 
               ),
                   ),
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               Expanded(
                             child: TextFormField(
                   decoration: inputDecoration('Enter endpoint name', 'Endpoint name', endpointNameCtrl),
@@ -357,7 +358,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                 ],
               ),
 
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               TextFormField(
                   decoration: inputDecoration('Enter travel cost', 'Price', priceCtrl),
                   keyboardType: TextInputType.number,
@@ -368,7 +369,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                   },
                   
                 ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
               Row(
                 children: <Widget>[
@@ -383,7 +384,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                 
               ),
                   ),
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               Expanded(
                             child: TextFormField(
                   decoration: inputDecoration('Enter startpoint longitude', 'Startpoint longitude', startpointLngCtrl),
@@ -399,7 +400,7 @@ class _UploadPlaceState extends State<UploadPlace> {
               
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
               Row(
                 children: <Widget>[
@@ -414,7 +415,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                 
               ),
                   ),
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               Expanded(
                   child: TextFormField(
                   decoration: inputDecoration('Enter endpoint longitude', 'Endpoint longitude', endpointLngCtrl),
@@ -430,22 +431,22 @@ class _UploadPlaceState extends State<UploadPlace> {
               
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
               TextFormField(
                   
                   decoration: InputDecoration(
                   hintText: "Enter path list one by one by tapping 'Enter' everytime",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   labelText: 'Paths list',
                   helperText: _helperText,
-                  contentPadding: EdgeInsets.only(right: 0, left: 10, top: 15, bottom: 5),
+                  contentPadding: const EdgeInsets.only(right: 0, left: 10, top: 15, bottom: 5),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CircleAvatar(
                       radius: 15,
                       backgroundColor: Colors.grey[300],
-                      child: IconButton(icon: Icon(Icons.clear, size: 15, color: Colors.blueAccent,), onPressed: (){
+                      child: IconButton(icon: const Icon(Icons.clear, size: 15, color: Colors.blueAccent,), onPressed: (){
                         pathsCtrl.clear();
                       }),
                     ),
@@ -471,14 +472,14 @@ class _UploadPlaceState extends State<UploadPlace> {
                   },
                 ),
 
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Container(
                 
-                child: paths.isEmpty ? Center(child: Text('No path list were added'),) :
+                child: paths.isEmpty ? const Center(child: Text('No path list were added'),) :
                 
                 ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: paths.length,
                       itemBuilder: (BuildContext context, int index) {
                       return ListTile(
@@ -487,7 +488,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                         ),
                         title: Text(paths[index]),
                         trailing: IconButton(
-                          icon: Icon(Icons.delete_outline), 
+                          icon: const Icon(Icons.delete_outline),
                           onPressed: (){
                             setState(() {
                               paths.remove(paths[index]);
@@ -503,15 +504,15 @@ class _UploadPlaceState extends State<UploadPlace> {
               ),
 
 
-              SizedBox(height: 100,),
+              const SizedBox(height: 100,),
 
 
                   Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         TextButton.icon(
-                          icon: Icon(Icons.remove_red_eye, size: 25, color: Colors.blueAccent,),
-                          label: Text('Preview', style: TextStyle(
+                          icon: const Icon(Icons.remove_red_eye, size: 25, color: Colors.blueAccent,),
+                          label: const Text('Preview', style: TextStyle(
                             fontWeight: FontWeight.w400,
                             color: Colors.black
                           ),),
@@ -521,16 +522,16 @@ class _UploadPlaceState extends State<UploadPlace> {
                         )
                       ],
                     ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
                     color: Colors.deepPurpleAccent,
                     height: 45,
                     child: uploadStarted == true
-                      ? Center(child: Container(height: 30, width: 30,child: CircularProgressIndicator()),)
+                      ? Center(child: Container(height: 30, width: 30,child: const CircularProgressIndicator()),)
                       : TextButton(
-                        child: Text(
+                        child: const Text(
                           'Upload Place Data',
                           style: TextStyle(
                               color: Colors.white,
@@ -543,7 +544,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                         })
                       
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 200,
                 ),
               
@@ -560,7 +561,7 @@ class _UploadPlaceState extends State<UploadPlace> {
     final AdminBloc ab = Provider.of(context, listen: false);
     return Container(
         height: 50,
-        padding: EdgeInsets.only(left: 15, right: 15),
+        padding: const EdgeInsets.only(left: 15, right: 15),
         decoration: BoxDecoration(
             color: Colors.grey[200],
             border: Border.all(color: Colors.grey),
@@ -572,7 +573,7 @@ class _UploadPlaceState extends State<UploadPlace> {
                 color: Colors.grey[800],
                 //fontFamily: 'Poppins',
                 fontWeight: FontWeight.w500),
-            decoration: InputDecoration(border: InputBorder.none),
+            decoration: const InputDecoration(border: InputBorder.none),
             onChanged: (value) {
               setState(() {
                 stateSelection = value;
@@ -584,7 +585,7 @@ class _UploadPlaceState extends State<UploadPlace> {
               });
             },
             value: stateSelection,
-            hint: Text('Select State'),
+            hint: const Text('Select State'),
             items: ab.states.map((f) {
               return DropdownMenuItem(
                 value: f,

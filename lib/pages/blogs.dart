@@ -1,12 +1,12 @@
 import '/blocs/admin_bloc.dart';
 import '/models/blog.dart';
 import '/pages/comments.dart';
-//import '/pages/update_blog.dart';
+import '/pages/update_blog.dart';
 import '/utils/cached_image.dart';
 import '/utils/dialog.dart';
 import '/utils/next_screen.dart';
 import '/utils/toast.dart';
-//import '/widgets/blog_preview.dart';
+import '/widgets/blog_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +30,7 @@ class _BlogPageState extends State<BlogPage> {
 
   @override
   void initState() {
-    controller = new ScrollController()..addListener(_scrollListener);
+    controller = ScrollController()..addListener(_scrollListener);
     super.initState();
     _isLoading = true;
     _getData();
@@ -54,7 +54,7 @@ class _BlogPageState extends State<BlogPage> {
     }
 
     if (data.docs.isNotEmpty) {
-      _lastVisible = data.docs[data.docs.length - 1];
+      _lastVisible = data.docs.last;
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -64,9 +64,8 @@ class _BlogPageState extends State<BlogPage> {
       }
     } else {
       setState(() => _isLoading = false);
-      //openToast(context, 'No more content available');
+      openToast(context, 'No more content available');
     }
-    return;
   }
 
   @override
@@ -74,8 +73,6 @@ class _BlogPageState extends State<BlogPage> {
     super.dispose();
     controller.dispose();
   }
-
-
 
   void _scrollListener() {
     if (!_isLoading) {
@@ -88,20 +85,28 @@ class _BlogPageState extends State<BlogPage> {
 
   navigateToCommentsPage(timestamp) {
     nextScreen(
-        context,
-        CommentsPage(
-            collectionName: collectionName, timestamp: timestamp, title: 'Blog'));
+      context,
+      CommentsPage(
+        collectionName: collectionName,
+        timestamp: timestamp,
+        title: 'Blog',
+      ),
+    );
   }
-
-
 
   handlePreview(Blog d) async {
-    //await showBlogPreview(context, d.title, d.description, d.thumbnailImagelUrl, d.loves, d.sourceUrl, d.date);
+    await showBlogPreview(
+      context,
+      d.title,
+      d.description,
+      d.thumbUrl, // FIXED: dùng thumbUrl đúng với model
+      d.loves,
+      d.sourceUrl,
+      d.date,
+    );
   }
 
-
-
-  reloadData (){
+  reloadData() {
     setState(() {
       _snap.clear();
       _data.clear();
@@ -113,79 +118,85 @@ class _BlogPageState extends State<BlogPage> {
   Future handleDelete(timestamp) async {
     final AdminBloc ab = Provider.of<AdminBloc>(context, listen: false);
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            contentPadding: EdgeInsets.all(50),
-            elevation: 0,
-            children: <Widget>[
-              Text('Delete?',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900)),
-              SizedBox(
-                height: 10,
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          contentPadding: EdgeInsets.all(50),
+          elevation: 0,
+          children: <Widget>[
+            Text(
+              'Delete?',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w900,
               ),
-              Text('Want to delete this item from the database?',
-                  style: TextStyle(
-                      color: Colors.grey[900],
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700)),
-              SizedBox(
-                height: 30,
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Want to delete this item from the database?',
+              style: TextStyle(
+                color: Colors.grey[900],
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
               ),
-              Center(
-                  child: Row(
+            ),
+            SizedBox(height: 30),
+            Center(
+              child: Row(
                 children: <Widget>[
                   TextButton(
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.redAccent),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25)))),
+                      backgroundColor: MaterialStateProperty.all(Colors.redAccent),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                    ),
                     onPressed: () async {
-                      //final context = ab.context;
-                      
-                        await ab.deleteContent(timestamp, 'blogs')
-                        .then((value) => ab.decreaseCount('blogs_count'));
-                        //.then((value) => openToast1(context, 'Item deleted successfully!'));
-                        reloadData();
-                        Navigator.pop(context);
-                      
-                      
+                      await ab
+                          .deleteContent(timestamp, 'blogs')
+                          .then((value) => ab.decreaseCount('blogs_count'));
+                      reloadData();
+                      Navigator.pop(context);
                     },
                     child: const Text(
                       'Yes',
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   SizedBox(width: 10),
                   TextButton(
                     style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25))),
-                        backgroundColor: MaterialStateProperty.all(Colors.deepPurpleAccent)),
+                      backgroundColor: MaterialStateProperty.all(Colors.deepPurpleAccent),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                    ),
                     onPressed: () => Navigator.pop(context),
                     child: const Text(
                       'No',
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],
-              ))
-            ],
-          );
-        });
+              ),
+            )
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -193,9 +204,7 @@ class _BlogPageState extends State<BlogPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.05,
-        ),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.05),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -210,12 +219,13 @@ class _BlogPageState extends State<BlogPage> {
           height: 3,
           width: 50,
           decoration: BoxDecoration(
-              color: Colors.indigoAccent,
-              borderRadius: BorderRadius.circular(15)),
+            color: Colors.indigoAccent,
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
-        
         Expanded(
           child: RefreshIndicator(
+            onRefresh: () async => reloadData(),
             child: ListView.builder(
               padding: EdgeInsets.only(top: 30, bottom: 20),
               controller: controller,
@@ -226,19 +236,17 @@ class _BlogPageState extends State<BlogPage> {
                   return dataList(_data[index]);
                 }
                 return Center(
-                  child: new Opacity(
+                  child: Opacity(
                     opacity: _isLoading ? 1.0 : 0.0,
-                    child: new SizedBox(
-                        width: 32.0,
-                        height: 32.0,
-                        child: new CircularProgressIndicator()),
+                    child: SizedBox(
+                      width: 32.0,
+                      height: 32.0,
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
               },
             ),
-            onRefresh: () async {
-              reloadData();
-            },
           ),
         ),
       ],
@@ -248,28 +256,26 @@ class _BlogPageState extends State<BlogPage> {
   Widget dataList(Blog d) {
     return Container(
       padding: EdgeInsets.all(15),
-      margin: EdgeInsets.only(top: 5, bottom: 5),
+      margin: EdgeInsets.symmetric(vertical: 5),
       height: 150,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10)),
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Row(
         children: <Widget>[
           Container(
             height: 130,
             width: 130,
             decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(10),
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(10),
             ),
-              child: CustomCacheImage(imageUrl: d.thumbUrl, radius: 10,),
+            child: CustomCacheImage(imageUrl: d.thumbUrl, radius: 10),
           ),
           Flexible(
             child: Padding(
-              padding: const EdgeInsets.only(
-                top: 15,
-                left: 15,
-              ),
+              padding: const EdgeInsets.only(top: 15, left: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -279,115 +285,31 @@ class _BlogPageState extends State<BlogPage> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
+                  SizedBox(height: 5),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                        decoration: BoxDecoration(
-                          color: Colors.deepPurpleAccent,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      SizedBox(width: 10),
                       Icon(Icons.access_time, size: 15, color: Colors.grey),
                       SizedBox(width: 3),
-
                       Text(
                         d.date,
                         style: TextStyle(fontSize: 12),
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   Row(
                     children: <Widget>[
-                      Container(
-                        height: 35,
-                        width: 45,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.favorite,
-                              size: 16,
-                              color: Colors.grey,
-                            ),
-                            Text(
-                              d.loves.toString(),
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 13),
-                            )
-                          ],
-                        ),
-                      ),
+                      _iconWithCount(Icons.favorite, d.loves.toString()),
                       SizedBox(width: 10),
-                      InkWell(
-                        child: Container(
-                          height: 35,
-                          width: 45,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Icon(
-                            Icons.comment,
-                            size: 16,
-                            color: Colors.grey[800],
-                          ),
-                        ),
-                        onTap: () => navigateToCommentsPage(d.timestamp),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      InkWell(
-                          child: Container(
-                              height: 35,
-                              width: 45,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Icon(Icons.remove_red_eye,
-                                  size: 16, color: Colors.grey[800])),
-                          onTap: () {
-                            handlePreview(d);
-                          }),
+                      _iconButton(Icons.comment, () => navigateToCommentsPage(d.timestamp)),
                       SizedBox(width: 10),
-                      InkWell(
-                        child: Container(
-                            height: 35,
-                            width: 45,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Icon(Icons.edit,
-                                size: 16, color: Colors.grey[800])),
-                        onTap: () {
-                          //nextScreen(context, UpdateBlog(blogData: d));
-                        },
-                      ),
+                      _iconButton(Icons.remove_red_eye, () => handlePreview(d)),
                       SizedBox(width: 10),
-                      InkWell(
-                        child: Container(
-                            height: 35,
-                            width: 45,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Icon(Icons.delete,
-                                size: 16, color: Colors.grey[800])),
-                        onTap: () {
-                          handleDelete(d.timestamp);
-                        },
-                      ),
+                      _iconButton(Icons.edit, () {
+                         nextScreen(context, UpdateBlog(blogData: d));
+                      }),
+                      SizedBox(width: 10),
+                      _iconButton(Icons.delete, () => handleDelete(d.timestamp)),
                     ],
                   ),
                 ],
@@ -396,6 +318,39 @@ class _BlogPageState extends State<BlogPage> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _iconWithCount(IconData icon, String count) {
+    return Container(
+      height: 35,
+      width: 45,
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 16, color: Colors.grey),
+          Text(count, style: TextStyle(color: Colors.grey, fontSize: 13)),
+        ],
+      ),
+    );
+  }
+
+  Widget _iconButton(IconData icon, VoidCallback onTap) {
+    return InkWell(
+      child: Container(
+        height: 35,
+        width: 45,
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Icon(icon, size: 16, color: Colors.grey[800]),
+      ),
+      onTap: onTap,
     );
   }
 }
