@@ -64,7 +64,7 @@ class _PlacesPageState extends State<PlacesPage> {
       }
     } else {
       setState(() => _isLoading = false);
-      openToast(context, 'No more contents available!');
+      openToast(context, 'Không còn nội dung nào nữa!');
     }
     return null;
   }
@@ -110,26 +110,26 @@ class _PlacesPageState extends State<PlacesPage> {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          contentPadding: EdgeInsets.all(50),
+          contentPadding: const EdgeInsets.all(50),
           elevation: 0,
           children: <Widget>[
-            Text('Delete?',
+            const Text('Xóa?',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            Text('Want to delete this item from the database?',
+            const SizedBox(height: 10),
+            const Text('Bạn muốn xóa mục này khỏi cơ sở dữ liệu?',
                 style: TextStyle(fontSize: 16)),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.purpleAccent,
+                    backgroundColor: Colors.redAccent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
-                  child: Text('Yes', style: TextStyle(color: Colors.white)),
+                  child: const Text('Có', style: TextStyle(color: Colors.white)),
                   onPressed: () async {
                     await ab.deleteContent(timestamp, collectionName);
                     ab.decreaseCount('places_count');
@@ -137,15 +137,15 @@ class _PlacesPageState extends State<PlacesPage> {
                     Navigator.pop(context);
                   },
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.blueAccent,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
-                  child: Text('No', style: TextStyle(color: Colors.white)),
+                  child: const Text('Không', style: TextStyle(color: Colors.white)),
                   onPressed: () => Navigator.pop(context),
                 ),
               ],
@@ -162,15 +162,15 @@ class _PlacesPageState extends State<PlacesPage> {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          contentPadding: EdgeInsets.all(50),
+          contentPadding: const EdgeInsets.all(50),
           elevation: 0,
           children: <Widget>[
-            Text('Add to Featured',
+            const Text('Thêm vào nổi bật',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            Text('Do you want to add this item to the featured list?',
+            const SizedBox(height: 10),
+            const Text('Bạn có muốn thêm địa điểm này vào danh sách nổi bật không?',
                 style: TextStyle(fontSize: 16)),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -181,13 +181,13 @@ class _PlacesPageState extends State<PlacesPage> {
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
-                  child: Text('Yes', style: TextStyle(color: Colors.white)),
+                  child: const Text('Có', style: TextStyle(color: Colors.white)),
                   onPressed: () async {
                     await ab.addToFeaturedList(context, timestamp);
                     Navigator.pop(context);
                   },
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.red,
@@ -195,7 +195,7 @@ class _PlacesPageState extends State<PlacesPage> {
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
-                  child: Text('No', style: TextStyle(color: Colors.white)),
+                  child: const Text('Không', style: TextStyle(color: Colors.white)),
                   onPressed: () => Navigator.pop(context),
                 ),
               ],
@@ -212,10 +212,10 @@ class _PlacesPageState extends State<PlacesPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-        Text('Places',
+        const Text('Địa điểm',
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
         Container(
-          margin: EdgeInsets.only(top: 5, bottom: 10),
+          margin: const EdgeInsets.only(top: 5, bottom: 10),
           height: 3,
           width: 50,
           decoration: BoxDecoration(
@@ -228,7 +228,7 @@ class _PlacesPageState extends State<PlacesPage> {
             onRefresh: () async => refreshData(),
             child: ListView.builder(
               controller: controller,
-              padding: EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 20),
               itemCount: _data.length + 1,
               itemBuilder: (context, index) {
                 if (index < _data.length) {
@@ -237,7 +237,7 @@ class _PlacesPageState extends State<PlacesPage> {
                 return Center(
                   child: Opacity(
                     opacity: _isLoading ? 1.0 : 0.0,
-                    child: CircularProgressIndicator(),
+                    child: const CircularProgressIndicator(),
                   ),
                 );
               },
@@ -250,8 +250,8 @@ class _PlacesPageState extends State<PlacesPage> {
 
   Widget dataList(Place d) {
     return Container(
-      padding: EdgeInsets.all(15),
-      margin: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       height: 165,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
@@ -268,7 +268,7 @@ class _PlacesPageState extends State<PlacesPage> {
             ),
             child: CustomCacheImage(imageUrl: d.imageUrl1, radius: 10),
           ),
-          SizedBox(width: 15),
+          const SizedBox(width: 15),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,21 +277,21 @@ class _PlacesPageState extends State<PlacesPage> {
                   d.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Row(
                   children: [
-                    Icon(LineIcons.mapMarker, size: 15, color: Colors.grey),
-                    SizedBox(width: 3),
-                    Text(d.location, style: TextStyle(fontSize: 12)),
-                    SizedBox(width: 10),
-                    Icon(Icons.access_time, size: 15, color: Colors.grey),
-                    SizedBox(width: 3),
-                    Text(d.date, style: TextStyle(fontSize: 12)),
+                    const Icon(LineIcons.mapMarker, size: 15, color: Colors.grey),
+                    const SizedBox(width: 3),
+                    Text(d.location, style: const TextStyle(fontSize: 12)),
+                    const SizedBox(width: 10),
+                    const Icon(Icons.access_time, size: 15, color: Colors.grey),
+                    const SizedBox(width: 3),
+                    Text(d.date, style: const TextStyle(fontSize: 12)),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Container(
@@ -304,28 +304,28 @@ class _PlacesPageState extends State<PlacesPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.star, size: 16, color: Colors.grey),
+                          const Icon(Icons.favorite, size: 16, color: Colors.grey),
                           Text('${d.loves}',
-                              style: TextStyle(fontSize: 13, color: Colors.grey)),
+                              style: const TextStyle(fontSize: 13, color: Colors.grey)),
                         ],
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     IconButton(
                       icon: Icon(Icons.edit, size: 20, color: Colors.grey[800]),
                       onPressed: () => nextScreen(context, UpdatePlace(placeData: d)),
                     ),
                     IconButton(
-                      icon: Icon(Icons.comment, size: 20, color: Colors.grey),
+                      icon: const Icon(Icons.comment, size: 20, color: Colors.grey),
                       onPressed: () => navigateToReviewPage(context, d.timestamp, d.name),
                     ),
                     IconButton(
-                      icon: Icon(Icons.featured_play_list_outlined,
-                          size: 20, color: Colors.purple),
+                      icon: const Icon(Icons.featured_play_list_outlined,
+                          size: 20, color: Colors.deepPurpleAccent),
                       onPressed: () => openFeaturedDialog(d.timestamp),
                     ),
                     IconButton(
-                      icon: Icon(Icons.delete, size: 20, color: Colors.red),
+                      icon: const Icon(Icons.delete, size: 20, color: Colors.red),
                       onPressed: () => handleDelete(d.timestamp),
                     ),
                   ],

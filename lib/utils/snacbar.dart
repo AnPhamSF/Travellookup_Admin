@@ -10,7 +10,7 @@ void openSnacbar(_scaffoldKey, snacMessage){
       height: 60,
       child: Text(
         snacMessage,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
         ),
       ),

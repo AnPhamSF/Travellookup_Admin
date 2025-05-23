@@ -7,20 +7,20 @@ showNotificationPreview(context, title, description) {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          contentPadding: EdgeInsets.all(80),
+          contentPadding: const EdgeInsets.all(80),
           elevation: 0,
           children: <Widget>[
 
-            Text('Preview', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900, color: Colors.deepPurpleAccent),),
+            const Text('Xem trước', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900, color: Colors.deepPurpleAccent),),
 
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Text(title,
 
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.w700)),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Html(
@@ -36,7 +36,7 @@ showNotificationPreview(context, title, description) {
                     //   launchUrl(url as Uri);
                     // },
                   ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Center(
@@ -49,8 +49,8 @@ showNotificationPreview(context, title, description) {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5)),
                         ),
-                        child: Text(
-                          'Close',
+                        child: const Text(
+                          'Đóng',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,

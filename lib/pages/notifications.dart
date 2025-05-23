@@ -2,10 +2,10 @@ import '/blocs/admin_bloc.dart';
 import '/blocs/notification_bloc.dart';
 import '/config/config.dart';
 import '/models/notification.dart';
-//import '/utils/dialog.dart';
-//import '/utils/notification_preview.dart';
+import '/utils/dialog.dart';
+import '/utils/notification_preview.dart';
 import '/utils/styles.dart';
-//import '/utils/toast.dart';
+import '/utils/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
@@ -110,7 +110,7 @@ class _NotificationsState extends State<Notifications> {
            contentPadding: const EdgeInsets.all(50),
            elevation: 0,
            children: <Widget>[
-             const Text('Delete?',
+             const Text('Xóa?',
                  style: TextStyle(
                      color: Colors.black,
                      fontSize: 20,
@@ -118,7 +118,7 @@ class _NotificationsState extends State<Notifications> {
              const SizedBox(
                height: 10,
              ),
-             const Text('Want to delete this item from the database?',
+             const Text('Muốn xóa mục này khỏi cơ sở dữ liệu?',
                  style: TextStyle(
                      color: Colors.grey,
                      fontSize: 16,
@@ -138,7 +138,7 @@ class _NotificationsState extends State<Notifications> {
                      backgroundColor: MaterialStateProperty.all(Colors.redAccent)
                    ),
                  child: const Text(
-                   'Yes',
+                   'Có',
                    style: TextStyle(
                        color: Colors.white,
                        fontSize: 16,
@@ -147,7 +147,7 @@ class _NotificationsState extends State<Notifications> {
                  onPressed: ()async{
                    if (ab.userType == 'tester') {
                      Navigator.pop(context);
-                     //openDialog(context, 'You are a Tester','Only admin can delete contents');
+                     openDialog(context, 'You are a Tester','Only admin can delete contents');
                    } else {
                      await ab.deleteContent(timestamp1, collectionName)
                      .then((value) => ab.decreaseCount('notifications_count'));
@@ -197,14 +197,14 @@ class _NotificationsState extends State<Notifications> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Notifications',
+            const Text(
+              'Thông báo',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
             ),
             Container(
               width: 300,
               height: 40,
-              padding: EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               decoration: BoxDecoration(
                   color: Colors.grey[100],
                   border: Border.all(color: Colors.grey),
@@ -213,14 +213,14 @@ class _NotificationsState extends State<Notifications> {
                 onPressed: (){
                   openSendNotificationDialog();
                 }, 
-                icon: Icon(LineIcons.bell), 
-                label: Text('Send A Notification')),
+                icon: const Icon(LineIcons.bell),
+                label: const Text('Gửi thông báo')),
                 
             ),
           ],
         ),
         Container(
-          margin: EdgeInsets.only(top: 5, bottom: 10),
+          margin: const EdgeInsets.only(top: 5, bottom: 10),
           height: 3,
           width: 50,
           decoration: BoxDecoration(
@@ -230,9 +230,9 @@ class _NotificationsState extends State<Notifications> {
          Expanded(
            child: RefreshIndicator(
              child: ListView.builder(
-               padding: EdgeInsets.only(top: 30, bottom: 20),
+               padding: const EdgeInsets.only(top: 30, bottom: 20),
                controller: controller,
-               physics: AlwaysScrollableScrollPhysics(),
+               physics: const AlwaysScrollableScrollPhysics(),
                itemCount: _data.length + 1,
                itemBuilder: (_, int index) {
                  if (index < _data.length) {
@@ -262,8 +262,8 @@ class _NotificationsState extends State<Notifications> {
 
    Widget dataList(NotificationModel d) {
      return Container(
-           margin: EdgeInsets.only(top: 5, bottom: 5),
-           padding: EdgeInsets.all(15),
+           margin: const EdgeInsets.only(top: 5, bottom: 5),
+           padding: const EdgeInsets.all(15),
            decoration: BoxDecoration(
                border: Border.all(color: Colors.grey),
                borderRadius: BorderRadius.circular(10)),
@@ -271,21 +271,21 @@ class _NotificationsState extends State<Notifications> {
              leading: ClipRRect(
                borderRadius: BorderRadius.circular(10),
                child: Image.asset(Config().icon)),
-             title: Text(d.title, style:TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+             title: Text(d.title, style:const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
              subtitle: Column(
                crossAxisAlignment: CrossAxisAlignment.start,
                children: <Widget>[
                  Text(d.description,
                    maxLines: 3,
                    overflow: TextOverflow.ellipsis,
-                   style:TextStyle(fontSize: 14, fontWeight: FontWeight.w500),),
-                 SizedBox(height: 5,),
+                   style:const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),),
+                 const SizedBox(height: 5,),
                  Row(
                    mainAxisAlignment: MainAxisAlignment.start,
                    children: <Widget>[
-                     Icon(Icons.access_time, size: 16, color: Colors.grey),
-                     SizedBox(width: 2),
-                     Text(d.createdAt, style:TextStyle(fontSize: 13, fontWeight: FontWeight.w400),),
+                     const Icon(Icons.access_time, size: 16, color: Colors.grey),
+                     const SizedBox(width: 2),
+                     Text(d.createdAt, style:const TextStyle(fontSize: 13, fontWeight: FontWeight.w400),),
                    ],
                  )
                ],
@@ -326,7 +326,7 @@ class _NotificationsState extends State<Notifications> {
        formKey.currentState!.save();
        if (ab.userType == 'tester') {
          Navigator.pop(context);
-         //openDialog(context, 'You are a Tester', 'Only admin can send notifications');
+         openDialog(context, 'bạn là Tester', 'chỉ có admin có thể gửi thông báo');
        } else {
          await getTimestamp()
          .then((value) => context.read<NotificationBloc>().sendNotification(titleCtrl.text, descriptionCtrl.text))
@@ -351,7 +351,7 @@ class _NotificationsState extends State<Notifications> {
    handleOpenPreview (){
      if(formKey.currentState!.validate()){
        formKey.currentState!.save();
-       //showNotificationPreview(context, titleCtrl.text, descriptionCtrl.text);
+       showNotificationPreview(context, titleCtrl.text, descriptionCtrl.text);
      }
    }
 
@@ -370,18 +370,18 @@ class _NotificationsState extends State<Notifications> {
        context: context,
        builder: (context){
          return SimpleDialog(
-             contentPadding: EdgeInsets.all(100),
+             contentPadding: const EdgeInsets.all(100),
              children: <Widget>[
-               Text('Send Push Notification to All User', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
-               SizedBox(height: 50,),
+               const Text('Gửi thông báo đẩy tới tất cả người dùng', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
+               const SizedBox(height: 50,),
                Form(
                  key: formKey,
                  child: Column(children: <Widget>[
                    TextFormField(
-                   decoration: inputDecoration('Enter Notification Title', 'Title', titleCtrl),
+                   decoration: inputDecoration('Nhập tiêu đề thông báo', 'Tiêu đề', titleCtrl),
                    controller: titleCtrl,
                    validator: (value) {
-                     if (value!.isEmpty) return 'Title is empty';
+                     if (value!.isEmpty) return 'Tiêu đề trống';
                      return null;
                      },
                   
@@ -389,14 +389,14 @@ class _NotificationsState extends State<Notifications> {
 
                   
 
-                   SizedBox(height: 20,),
+                   const SizedBox(height: 20,),
 
                    TextFormField(
                    decoration: InputDecoration(
-                       hintText: 'Enter Description (supports HTML text)',
-                       border: OutlineInputBorder(),
-                       labelText: 'Description',
-                       contentPadding: EdgeInsets.only(
+                       hintText: 'Nhập mô tả (hỗ trợ văn bản HTML)',
+                       border: const OutlineInputBorder(),
+                       labelText: 'Mô tả',
+                       contentPadding: const EdgeInsets.only(
                            right: 0, left: 10, top: 15, bottom: 5),
                        suffixIcon: Padding(
                          padding: const EdgeInsets.all(8.0),
@@ -404,7 +404,7 @@ class _NotificationsState extends State<Notifications> {
                            radius: 15,
                            backgroundColor: Colors.grey[300],
                            child: IconButton(
-                               icon: Icon(Icons.close, size: 15),
+                               icon: const Icon(Icons.close, size: 15),
                                onPressed: () {
                                  descriptionCtrl.clear();
                                }),
@@ -416,7 +416,7 @@ class _NotificationsState extends State<Notifications> {
                    keyboardType: TextInputType.multiline,
                    controller: descriptionCtrl,
                    validator: (value) {
-                     if (value!.isEmpty) return 'Description is empty';
+                     if (value!.isEmpty) return 'Mô tả trống';
                      return null;
                    },
                   
@@ -425,7 +425,7 @@ class _NotificationsState extends State<Notifications> {
                   
 
 
-                 SizedBox(height: 50,),
+                 const SizedBox(height: 50,),
 
                  Center(
                  child: Row(
@@ -439,8 +439,8 @@ class _NotificationsState extends State<Notifications> {
                      ),
                      backgroundColor: MaterialStateProperty.all(Colors.deepPurpleAccent)
                    ),
-                 child: Text(
-                   'Preview',
+                 child: const Text(
+                   'Xem trước',
                    style: TextStyle(
                        color: Colors.white,
                        fontSize: 16,
@@ -448,14 +448,14 @@ class _NotificationsState extends State<Notifications> {
                  ),
                  onPressed: ()async{
                  
-                   //handleOpenPreview();
+                   handleOpenPreview();
                   
                   
                   
                  },
                ),
 
-               SizedBox(width: 10),
+               const SizedBox(width: 10),
 
 
                    TextButton(
@@ -466,7 +466,7 @@ class _NotificationsState extends State<Notifications> {
                      ),
                      backgroundColor: MaterialStateProperty.all(Colors.deepPurpleAccent)
                    ),
-                 child: Text(
+                 child: const Text(
                    'Send Now',
                    style: TextStyle(
                        color: Colors.white,
@@ -485,7 +485,7 @@ class _NotificationsState extends State<Notifications> {
                  },
                ),
 
-               SizedBox(width: 10),
+               const SizedBox(width: 10),
 
                TextButton(
                  style: ButtonStyle(
@@ -495,7 +495,7 @@ class _NotificationsState extends State<Notifications> {
                      ),
                      backgroundColor: MaterialStateProperty.all(Colors.redAccent)
                    ),
-                 child: Text(
+                 child: const Text(
                    'Cancel',
                    style: TextStyle(
                        color: Colors.white,

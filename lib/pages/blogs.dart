@@ -64,7 +64,7 @@ class _BlogPageState extends State<BlogPage> {
       }
     } else {
       setState(() => _isLoading = false);
-      openToast(context, 'No more content available');
+      openToast(context, 'Không còn nội dung nào nữa');
     }
   }
 
@@ -99,7 +99,7 @@ class _BlogPageState extends State<BlogPage> {
       context,
       d.title,
       d.description,
-      d.thumbUrl, // FIXED: dùng thumbUrl đúng với model
+      d.thumbUrl,
       d.loves,
       d.sourceUrl,
       d.date,
@@ -121,27 +121,27 @@ class _BlogPageState extends State<BlogPage> {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          contentPadding: EdgeInsets.all(50),
+          contentPadding: const EdgeInsets.all(50),
           elevation: 0,
           children: <Widget>[
-            Text(
-              'Delete?',
+            const Text(
+              'Xóa?',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.w900,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
-              'Want to delete this item from the database?',
+              'Bạn muốn xóa mục này khỏi cơ sở dữ liệu?',
               style: TextStyle(
                 color: Colors.grey[900],
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Center(
               child: Row(
                 children: <Widget>[
@@ -162,7 +162,7 @@ class _BlogPageState extends State<BlogPage> {
                       Navigator.pop(context);
                     },
                     child: const Text(
-                      'Yes',
+                      'Có',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -170,7 +170,7 @@ class _BlogPageState extends State<BlogPage> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   TextButton(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.deepPurpleAccent),
@@ -182,7 +182,7 @@ class _BlogPageState extends State<BlogPage> {
                     ),
                     onPressed: () => Navigator.pop(context),
                     child: const Text(
-                      'No',
+                      'Không',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -205,7 +205,7 @@ class _BlogPageState extends State<BlogPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
@@ -215,7 +215,7 @@ class _BlogPageState extends State<BlogPage> {
           ],
         ),
         Container(
-          margin: EdgeInsets.only(top: 5, bottom: 10),
+          margin: const EdgeInsets.only(top: 5, bottom: 10),
           height: 3,
           width: 50,
           decoration: BoxDecoration(
@@ -227,9 +227,9 @@ class _BlogPageState extends State<BlogPage> {
           child: RefreshIndicator(
             onRefresh: () async => reloadData(),
             child: ListView.builder(
-              padding: EdgeInsets.only(top: 30, bottom: 20),
+              padding: const EdgeInsets.only(top: 30, bottom: 20),
               controller: controller,
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemCount: _data.length + 1,
               itemBuilder: (_, int index) {
                 if (index < _data.length) {
@@ -238,7 +238,7 @@ class _BlogPageState extends State<BlogPage> {
                 return Center(
                   child: Opacity(
                     opacity: _isLoading ? 1.0 : 0.0,
-                    child: SizedBox(
+                    child: const SizedBox(
                       width: 32.0,
                       height: 32.0,
                       child: CircularProgressIndicator(),
@@ -255,8 +255,8 @@ class _BlogPageState extends State<BlogPage> {
 
   Widget dataList(Blog d) {
     return Container(
-      padding: EdgeInsets.all(15),
-      margin: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       height: 150,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
@@ -283,32 +283,32 @@ class _BlogPageState extends State<BlogPage> {
                     d.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Row(
                     children: <Widget>[
-                      Icon(Icons.access_time, size: 15, color: Colors.grey),
-                      SizedBox(width: 3),
+                      const Icon(Icons.access_time, size: 15, color: Colors.grey),
+                      const SizedBox(width: 3),
                       Text(
                         d.date,
-                        style: TextStyle(fontSize: 12),
+                        style: const TextStyle(fontSize: 12),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     children: <Widget>[
                       _iconWithCount(Icons.favorite, d.loves.toString()),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       _iconButton(Icons.comment, () => navigateToCommentsPage(d.timestamp)),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       _iconButton(Icons.remove_red_eye, () => handlePreview(d)),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       _iconButton(Icons.edit, () {
                          nextScreen(context, UpdateBlog(blogData: d));
                       }),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       _iconButton(Icons.delete, () => handleDelete(d.timestamp)),
                     ],
                   ),
@@ -333,7 +333,7 @@ class _BlogPageState extends State<BlogPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, size: 16, color: Colors.grey),
-          Text(count, style: TextStyle(color: Colors.grey, fontSize: 13)),
+          Text(count, style: const TextStyle(color: Colors.grey, fontSize: 13)),
         ],
       ),
     );
@@ -341,6 +341,7 @@ class _BlogPageState extends State<BlogPage> {
 
   Widget _iconButton(IconData icon, VoidCallback onTap) {
     return InkWell(
+      onTap: onTap,
       child: Container(
         height: 35,
         width: 45,
@@ -350,7 +351,6 @@ class _BlogPageState extends State<BlogPage> {
         ),
         child: Icon(icon, size: 16, color: Colors.grey[800]),
       ),
-      onTap: onTap,
     );
   }
 }

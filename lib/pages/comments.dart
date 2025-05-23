@@ -48,19 +48,20 @@ class _CommentsPageState extends State<CommentsPage> {
 
   Future<Null> _getData() async {
     QuerySnapshot data;
-    if (_lastVisible == null)
+    if (_lastVisible == null) {
       data = await firestore
           .collection('${widget.collectionName}/${widget.timestamp}/comments')
           .orderBy('timestamp', descending: true)
           .limit(15)
           .get();
-    else
+    } else {
       data = await firestore
           .collection('${widget.collectionName}/${widget.timestamp}/comments')
           .orderBy('timestamp', descending: true)
           .startAfter([_lastVisible!['timestamp']])
           .limit(15)
           .get();
+    }
 
     if (data != null && data.docs.length > 0) {
       _lastVisible = data.docs[data.docs.length - 1];
@@ -73,7 +74,7 @@ class _CommentsPageState extends State<CommentsPage> {
       }
     } else {
       setState(() => _isLoading = false);
-      openToast(context, 'No more reviews available!');
+      openToast(context, 'Không còn nội dung nào nữa!');
     }
     return null;
   }
@@ -103,23 +104,23 @@ class _CommentsPageState extends State<CommentsPage> {
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            contentPadding: EdgeInsets.all(50),
+            contentPadding: const EdgeInsets.all(50),
             elevation: 0,
             children: <Widget>[
-              Text('Delete?',
+              const Text('Xóa?',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.w900)),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text('Want to delete this item from the database?',
+              Text('Bạn muốn xóa mục này khỏi cơ sở dữ liệu?',
                   style: TextStyle(
                       color: Colors.grey[900],
                       fontSize: 16,
                       fontWeight: FontWeight.w700)),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Center(
@@ -133,8 +134,8 @@ class _CommentsPageState extends State<CommentsPage> {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25)))),
-                    child: Text(
-                      'Yes',
+                    child: const Text(
+                      'Có',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -143,7 +144,7 @@ class _CommentsPageState extends State<CommentsPage> {
                     onPressed: () async {
                       if (ab.userType == 'tester') {
                         Navigator.pop(context);
-                        openDialog(context, 'You are a Tester','Only admin can delete comments');
+                        openDialog(context, 'Bạn là Tester','Chỉ có Admin mới có thể tải lên, xóa và sửa đổi nội dung');
                       } else {
                         await context.read<CommentBloc>().deleteComment(widget.timestamp, d.uid, d.timestamp, widget.collectionName)
                         .then((value){
@@ -151,14 +152,14 @@ class _CommentsPageState extends State<CommentsPage> {
                             context.read<CommentBloc>().decreaseCommentsCount(widget.timestamp);
                           }
                         })
-                        .then((value) => openToast1(context, 'Comment deleted successfully'));
+                        .then((value) => openToast1(context, 'Đã xóa bình luận thành công'));
                         reloadData();
                         Navigator.pop(context);
                       }
                       
                     },
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   TextButton(
                     style: ButtonStyle(
                         backgroundColor:
@@ -167,8 +168,8 @@ class _CommentsPageState extends State<CommentsPage> {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(25)))),
-                    child: Text(
-                      'No',
+                    child: const Text(
+                      'Không',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -205,10 +206,10 @@ class _CommentsPageState extends State<CommentsPage> {
   handleSubmit(value) async {
     final  ab = context.read<AdminBloc>();
     if(ab.userType == 'tester'){
-      openDialog(context, 'You are a Tester','Only admin can make comments');
+      openDialog(context, 'Bạn là Tester','Chỉ có Admin mới có thể bình luận');
     }else{
       if (value.isEmpty) {
-      openDialog(context, 'Write A Comment!', '');
+      openDialog(context, 'Viết bình luận!', '');
     } else {
       await context
           .read<CommentBloc>()
@@ -218,7 +219,7 @@ class _CommentsPageState extends State<CommentsPage> {
               context.read<CommentBloc>().increaseCommmentsCount(widget.timestamp);
             }
           })
-          .then((value) => openToast(context, 'Comment added successfully!'));
+          .then((value) => openToast(context, 'Đã thêm bình luận thành công!'));
       clearTextFields();
       reloadData();
     }
@@ -244,9 +245,9 @@ class _CommentsPageState extends State<CommentsPage> {
               Expanded(
                 child: RefreshIndicator(
                   child: ListView.builder(
-                    padding: EdgeInsets.only(top: 30, bottom: 20),
+                    padding: const EdgeInsets.only(top: 30, bottom: 20),
                     controller: controller,
-                    physics: AlwaysScrollableScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     itemCount: _data.length + 1,
                     itemBuilder: (_, int index) {
                       if (index < _data.length) {
@@ -268,7 +269,7 @@ class _CommentsPageState extends State<CommentsPage> {
                   },
                 ),
               ),
-              Divider(
+              const Divider(
                 height: 1,
                 color: Colors.black26,
               ),
@@ -276,7 +277,7 @@ class _CommentsPageState extends State<CommentsPage> {
                 child: Container(
                   height: 65,
                   padding:
-                      EdgeInsets.only(top: 8, bottom: 10, right: 20, left: 20),
+                      const EdgeInsets.only(top: 8, bottom: 10, right: 20, left: 20),
                   width: double.infinity,
                   color: Colors.white,
                   child: Container(
@@ -285,9 +286,9 @@ class _CommentsPageState extends State<CommentsPage> {
                         borderRadius: BorderRadius.circular(25)),
                     child: TextFormField(
                       decoration: InputDecoration(
-                          errorStyle: TextStyle(fontSize: 0),
+                          errorStyle: const TextStyle(fontSize: 0),
                           contentPadding:
-                              EdgeInsets.only(left: 15, top: 10, right: 5),
+                              const EdgeInsets.only(left: 15, top: 10, right: 5),
                           border: InputBorder.none,
                           hintText: 'Write a comment',
                           suffixIcon: IconButton(
@@ -311,8 +312,8 @@ class _CommentsPageState extends State<CommentsPage> {
 
   Widget reviewList(Comment d) {
     return Container(
-        padding: EdgeInsets.only(top: 10, bottom: 10),
-        margin: EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(top: 10, bottom: 10),
+        margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: Colors.black12),
@@ -327,12 +328,12 @@ class _CommentsPageState extends State<CommentsPage> {
             children: <Widget>[
               Text(
                 d.name,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,
                     fontWeight: FontWeight.w700),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               Text(d.date,
@@ -344,13 +345,13 @@ class _CommentsPageState extends State<CommentsPage> {
           ),
           subtitle: Text(
                   d.comment,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 15,
                       color: Colors.black87,
                       fontWeight: FontWeight.w500),
                 ),
           trailing: IconButton(
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
               onPressed: () {
                 handleDelete(context, d);
               }),

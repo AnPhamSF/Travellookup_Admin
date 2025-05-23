@@ -28,7 +28,7 @@ class _UpdatePlaceState extends State<UpdatePlace> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   final String collectionName = 'places';
   List paths =[];
-  String _helperText = 'Enter paths list to help users to go to the desired destination like : Dhaka to Sylhet by Bus - 200Tk.....';
+  String _helperText = 'Nhập danh sách hướng dẫn để giúp người dùng đi đến điểm mong muốn như: Từ Sân bay đến Bến Thành bằng xe buýt số .....';
   bool uploadStarted = false;
   var stateSelection;
   
@@ -86,20 +86,20 @@ class _UpdatePlaceState extends State<UpdatePlace> {
   void handleSubmit() async {
     final AdminBloc ab = Provider.of<AdminBloc>(context, listen: false);
     if(stateSelection == null){
-      openDialog(context, 'Select City First', '');
+      openDialog(context, 'Chọn tỉnh/thành phố trước', '');
     }else{
       if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       if(paths.isEmpty){
-        openSnacbar(scaffoldKey, 'Paths List can not be empty');
+        openSnacbar(scaffoldKey, 'Danh sách hướng dẫn không được để trống');
       } else {
         if (ab.userType == 'tester') {
-        openDialog(context, 'You are a Tester', 'Only Admin can upload, delete & modify contents');
+        openDialog(context, 'Bạn là Tester', 'Chỉ có Admin mới có thể tải lên, xóa và sửa đổi nội dung');
       } else {
         setState(()=> uploadStarted = true);
         await saveToDatabase();
         setState(()=> uploadStarted = false);
-        openDialog(context, 'Updated Successfully', '');
+        openDialog(context, 'Đã cập nhật thành công', '');
         clearFields();
       }
       }
@@ -237,55 +237,54 @@ class _UpdatePlaceState extends State<UpdatePlace> {
               key: formKey,
               child: ListView(children: <Widget>[
                 SizedBox(height: h * 0.10,),
-                Text('Place Details', style: TextStyle(
+                const Text('Chi tiết địa điểm', style: TextStyle(
                   fontSize: 30, fontWeight: FontWeight.w800
                 ),),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 //statesDropdown(),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 TextFormField(
-                  decoration: inputDecoration('Enter place name', 'Place name', nameCtrl),
+                  decoration: inputDecoration('Nhập tên địa điểm', 'Tên địa điểm', nameCtrl),
                   controller: nameCtrl,
                   validator: (value){
-                    if(value!.isEmpty) return 'Value is empty'; return null;
+                    if(value!.isEmpty) return 'Không để trống'; return null;
                   },
                   
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 TextFormField(
-                  decoration: inputDecoration('Enter location name', 'Location name', locationCtrl),
+                  decoration: inputDecoration('Nhập tên vị trí', 'Tên vị trí', locationCtrl),
                   controller: locationCtrl,
-                  
                   validator: (value){
-                    if(value!.isEmpty) return 'Value is empty'; return null;
+                    if(value!.isEmpty) return 'Không để trống'; return null;
                   },
                   
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 
 
                 Row(
                   children: <Widget>[
                     Expanded(
                   child: TextFormField(
-                  decoration: inputDecoration('Enter Latitude', 'Latitude', latCtrl),
+                  decoration: inputDecoration('Nhập vĩ độ', 'vĩ độ', latCtrl),
                   controller: latCtrl,
                   keyboardType: TextInputType.number,
                   validator: (value){
-                      if(value!.isEmpty) return 'Value is empty'; return null;
+                      if(value!.isEmpty) return 'Không để trống'; return null;
                   },
                   
                 ),
               ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Expanded(
                               child: TextFormField(
-                    decoration: inputDecoration('Enter Longitude', 'Longitude', lngCtrl),
+                    decoration: inputDecoration('Nhập kinh độ', 'Kinh độ', lngCtrl),
                     keyboardType: TextInputType.number,
 
                     controller: lngCtrl,
                     validator: (value){
-                      if(value!.isEmpty) return 'Value is empty'; return null;
+                      if(value!.isEmpty) return 'Không để trống'; return null;
                     },
                     
                   ),
@@ -293,48 +292,48 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                 
                   ],
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
 
                 TextFormField(
-                  decoration: inputDecoration('Enter image url (thumbnail)', 'Image1(Thumbnail)', image1Ctrl),
+                  decoration: inputDecoration('Nhập URL hình ảnh (thumbnail)', 'Image1(Thumbnail)', image1Ctrl),
                   controller: image1Ctrl,
                   validator: (value){
-                    if(value!.isEmpty) return 'Value is empty'; return null;
+                    if(value!.isEmpty) return 'Không để trống'; return null;
                   },
                   
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 TextFormField(
-                  decoration: inputDecoration('Enter image url', 'Image2', image2Ctrl),
+                  decoration: inputDecoration('Nhập URL hình ảnh', 'Image2', image2Ctrl),
                   controller: image2Ctrl,
                   validator: (value){
-                    if(value!.isEmpty) return 'Value is empty'; return null;
+                    if(value!.isEmpty) return 'Không để trống'; return null;
                   },
                   
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 TextFormField(
-                  decoration: inputDecoration('Enter image url', 'Image3', image3Ctrl),
+                  decoration: inputDecoration('Nhập URL hình ảnh', 'Image3', image3Ctrl),
                   controller: image3Ctrl,
                   validator: (value){
-                    if(value!.isEmpty) return 'Value is empty'; return null;
+                    if(value!.isEmpty) return 'Không để trống'; return null;
                   },
                   
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Enter place details (Html or Normal Text)',
-                    border: OutlineInputBorder(),
-                    labelText: 'Place details',
-                    contentPadding: EdgeInsets.only(right: 0, left: 10, top: 15, bottom: 5),
+                    hintText: 'Nhập thông tin chi tiết về địa điểm (Html hoặc văn bản thường)',
+                    border: const OutlineInputBorder(),
+                    labelText: 'Chi tiết địa điểm',
+                    contentPadding: const EdgeInsets.only(right: 0, left: 10, top: 15, bottom: 5),
                     suffixIcon: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(
                         radius: 15,
                         backgroundColor: Colors.grey[300],
-                        child: IconButton(icon: Icon(Icons.close, size: 15), onPressed: (){
+                        child: IconButton(icon: const Icon(Icons.close, size: 15), onPressed: (){
                           descriptionCtrl.clear();
                         }),
                       ),
@@ -347,39 +346,39 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                   keyboardType: TextInputType.multiline,
                   controller: descriptionCtrl,
                   validator: (value){
-                    if(value!.isEmpty) return 'Value is empty'; return null;
+                    if(value!.isEmpty) return 'Không để trống'; return null;
                   },
                   
                 ),
-                SizedBox(height: 50,),
-                Text('Travel Guide Details', style: TextStyle(
+                const SizedBox(height: 50,),
+                const Text('Chi tiết hướng dẫn du lịch', style: TextStyle(
                   fontSize: 30, fontWeight: FontWeight.w800
                 ),),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
 
                 Row(
                   children: <Widget>[
                     Expanded(
                                       child: TextFormField(
-                  decoration: inputDecoration('Enter startpont name', 'Startpont name', startpointNameCtrl),
+                  decoration: inputDecoration('Nhập tên điểm bắt đầu', 'Tên điểm bắt đầu', startpointNameCtrl),
                   controller: startpointNameCtrl,
                   
                   validator: (value){
-                      if(value!.isEmpty) return 'Value is empty'; return null;
+                      if(value!.isEmpty) return 'Không để trống'; return null;
                   },
                   
                 ),
                     ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Expanded(
                               child: TextFormField(
-                    decoration: inputDecoration('Enter endpoint name', 'Endpoint name', endpointNameCtrl),
+                    decoration: inputDecoration('Nhập tên điểm đến', 'Tên điểm đến', endpointNameCtrl),
                     
 
                     controller: endpointNameCtrl,
                     validator: (value){
-                      if(value!.isEmpty) return 'Value is empty'; return null;
+                      if(value!.isEmpty) return 'Không để trống'; return null;
                     },
                     
                   ),
@@ -388,41 +387,41 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                   ],
                 ),
 
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 TextFormField(
-                    decoration: inputDecoration('Enter travel cost', 'Price', priceCtrl),
+                    decoration: inputDecoration('Nhập chi phí đi lại', 'Giá', priceCtrl),
                     keyboardType: TextInputType.number,
 
                     controller: priceCtrl,
                     validator: (value){
-                      if(value!.isEmpty) return 'Value is empty'; return null;
+                      if(value!.isEmpty) return 'Không để trống'; return null;
                     },
                     
                   ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
                 Row(
                   children: <Widget>[
                     Expanded(
                                       child: TextFormField(
-                  decoration: inputDecoration('Enter startpoint latitude', 'Startpoint latitude', startpointLatCtrl),
+                  decoration: inputDecoration('Nhập vĩ độ điểm bắt đầu', 'Vĩ độ điểm bắt đầu', startpointLatCtrl),
                   controller: startpointLatCtrl,
                   keyboardType: TextInputType.number,
                   validator: (value){
-                      if(value!.isEmpty) return 'Value is empty'; return null;
+                      if(value!.isEmpty) return 'Không để trống'; return null;
                   },
                   
                 ),
                     ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Expanded(
                               child: TextFormField(
-                    decoration: inputDecoration('Enter startpoint longitude', 'Startpoint longitude', startpointLngCtrl),
+                    decoration: inputDecoration('Nhập kinh độ điểm bắt đầu', 'Kinh độ điểm bắt đầu', startpointLngCtrl),
                     keyboardType: TextInputType.number,
 
                     controller: startpointLngCtrl,
                     validator: (value){
-                      if(value!.isEmpty) return 'Value is empty'; return null;
+                      if(value!.isEmpty) return 'Không để trống'; return null;
                     },
                     
                   ),
@@ -430,30 +429,30 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                 
                   ],
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
                 Row(
                   children: <Widget>[
                     Expanded(
                                       child: TextFormField(
-                  decoration: inputDecoration('Enter endpoint latitude', 'Endpoint latitude', endpointLatCtrl),
+                  decoration: inputDecoration('Nhập vĩ độ điểm đến', 'Vĩ độ điểm đến', endpointLatCtrl),
                   controller: endpointLatCtrl,
                   keyboardType: TextInputType.number,
                   validator: (value){
-                      if(value!.isEmpty) return 'Value is empty'; return null;
+                      if(value!.isEmpty) return 'Không để trống'; return null;
                   },
                   
                 ),
                     ),
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Expanded(
                     child: TextFormField(
-                    decoration: inputDecoration('Enter endpoint longitude', 'Endpoint longitude', endpointLngCtrl),
+                    decoration: inputDecoration('Nhập kinh độ điểm đến', 'Kinh độ điểm đến', endpointLngCtrl),
                     keyboardType: TextInputType.number,
 
                     controller: endpointLngCtrl,
                     validator: (value){
-                      if(value!.isEmpty) return 'Value is empty'; return null;
+                      if(value!.isEmpty) return 'Không để trống'; return null;
                     },
                     
                   ),
@@ -461,22 +460,22 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                 
                   ],
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
                 TextFormField(
                     
                     decoration: InputDecoration(
-                    hintText: "Enter path list one by one by tapping 'Enter' everytime",
-                    border: OutlineInputBorder(),
-                    labelText: 'Paths list',
+                    hintText: "Nhập danh sách hướng dẫn từng bước một bằng cách nhấn 'Enter' mỗi lần",
+                    border: const OutlineInputBorder(),
+                    labelText: 'Danh sách hướng dẫn',
                     helperText: _helperText,
-                    contentPadding: EdgeInsets.only(right: 0, left: 10, top: 15, bottom: 5),
+                    contentPadding: const EdgeInsets.only(right: 0, left: 10, top: 15, bottom: 5),
                     suffixIcon: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(
                         radius: 15,
                         backgroundColor: Colors.grey[300],
-                        child: IconButton(icon: Icon(Icons.clear, size: 15, color: Colors.blueAccent,), onPressed: (){
+                        child: IconButton(icon: const Icon(Icons.clear, size: 15, color: Colors.blueAccent,), onPressed: (){
                           pathsCtrl.clear();
                         }),
                       ),
@@ -488,7 +487,7 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                     onFieldSubmitted: (String value) {
                       if(value.isEmpty){
                         setState(() {
-                        _helperText = "You can't put empty item is the list";
+                        _helperText = "Bạn không thể đặt mục trống vào danh sách";
                           
                         });
                       } else{
@@ -502,14 +501,14 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                     },
                   ),
 
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Container(
                   
-                  child: paths.isEmpty ? Center(child: Text('No path list were added'),) :
+                  child: paths.isEmpty ? const Center(child: Text('Không có danh sách đường dẫn nào được thêm vào'),) :
                   
                   ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: paths.length,
                         itemBuilder: (BuildContext context, int index) {
                         return ListTile(
@@ -518,11 +517,11 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                           ),
                           title: Text(paths[index]),
                           trailing: IconButton(
-                            icon: Icon(Icons.delete_outline), 
+                            icon: const Icon(Icons.delete_outline),
                             onPressed: (){
                               setState(() {
                                 paths.remove(paths[index]);
-                                _helperText = 'Added ${paths.length} items';
+                                _helperText = 'Thêm ${paths.length} items';
 
                               });
                             }),
@@ -534,7 +533,7 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                 ),
 
 
-                SizedBox(height: 100,),
+                const SizedBox(height: 100,),
 
 
                     Row(
@@ -542,8 +541,8 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                         children: <Widget>[
                           TextButton.icon(
                             
-                            icon: Icon(Icons.remove_red_eye, size: 25, color: Colors.blueAccent,),
-                            label: Text('Preview', style: TextStyle(
+                            icon: const Icon(Icons.remove_red_eye, size: 25, color: Colors.blueAccent,),
+                            label: const Text('Xem trước', style: TextStyle(
                               fontWeight: FontWeight.w400,
                               color: Colors.black
                             ),),
@@ -553,17 +552,17 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                           )
                         ],
                       ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                       color: Colors.deepPurpleAccent,
                       height: 45,
                       child: uploadStarted == true
-                        ? Center(child: Container(height: 30, width: 30,child: CircularProgressIndicator()),)
+                        ? Center(child: Container(height: 30, width: 30,child: const CircularProgressIndicator()),)
                         : TextButton(
-                          child: Text(
-                            'Update Place Data',
+                          child: const Text(
+                            'Cập nhật dữ liệu địa điểm',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -575,7 +574,7 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                           })
                         
                         ),
-                  SizedBox(
+                  const SizedBox(
                     height: 200,
                   ),
                 
@@ -593,7 +592,7 @@ class _UpdatePlaceState extends State<UpdatePlace> {
     final AdminBloc ab = Provider.of(context, listen: false);
     return Container(
         height: 50,
-        padding: EdgeInsets.only(left: 15, right: 15),
+        padding: const EdgeInsets.only(left: 15, right: 15),
         decoration: BoxDecoration(
             color: Colors.grey[200],
             border: Border.all(color: Colors.grey),
@@ -605,7 +604,7 @@ class _UpdatePlaceState extends State<UpdatePlace> {
                 color: Colors.grey[800],
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w500),
-            decoration: InputDecoration(border: InputBorder.none),
+            decoration: const InputDecoration(border: InputBorder.none),
             onChanged: (value) {
               setState(() {
                 stateSelection = value;
@@ -617,7 +616,7 @@ class _UpdatePlaceState extends State<UpdatePlace> {
               });
             },
             value: stateSelection,
-            hint: Text('Select State'),
+            hint: const Text('Chọn tỉnh/thành phố'),
             items: ab.states.map((f) {
               return DropdownMenuItem(
                 value: f,

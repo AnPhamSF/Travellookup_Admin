@@ -111,7 +111,7 @@ class _CitiesPageState extends State<States> {
           contentPadding: const EdgeInsets.all(50),
           elevation: 0,
           children: <Widget>[
-            const Text('Delete?',
+            const Text('Xóa?',
                 
                 style: TextStyle(
                     color: Colors.black,
@@ -120,7 +120,7 @@ class _CitiesPageState extends State<States> {
             const SizedBox(
               height: 10,
             ),
-            Text('Want to delete this item from the database?',
+            Text('Muốn xóa mục này khỏi cơ sở dữ liệu?',
                 
                 style: TextStyle(
                     color: Colors.grey[900],
@@ -140,7 +140,7 @@ class _CitiesPageState extends State<States> {
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25)))),
                 child: const Text(
-                  'Yes',
+                  'Có',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -151,12 +151,12 @@ class _CitiesPageState extends State<States> {
                   
                   if (ab.userType == 'tester') {
                     Navigator.pop(context);
-                    openDialog(context, 'You are a Tester','Only admin can delete contents');
+                    openDialog(context, 'Bạn là Tester','Chỉ có admin có thể xóa');
                   } else {
                     await ab.deleteContent(timestamp1, collectionName)
                     .then((value) => ab.getStates())
                     .then((value) => ab.decreaseCount('states_count'))
-                    .then((value) => openToast1(context, 'Deleted Successfully'));
+                    .then((value) => openToast1(context, 'Xóa thành công'));
                     refreshData();
                     Navigator.pop(context);
                     
@@ -175,7 +175,7 @@ class _CitiesPageState extends State<States> {
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25)))),
                 child: const Text(
-                  'No',
+                  'Không',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -205,7 +205,7 @@ class _CitiesPageState extends State<States> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'States',
+              'Tỉnh/Thành phố',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
             ),
             Container(
@@ -221,7 +221,7 @@ class _CitiesPageState extends State<States> {
                   openAddDialog();
                 }, 
                 icon: const Icon(LineIcons.list),
-                label: const Text('Add State/Division')),
+                label: const Text('Thêm tỉnh/thành phố')),
                 
             ),
           ],
@@ -348,12 +348,11 @@ class _CitiesPageState extends State<States> {
       formKey.currentState!.save();
       if (ab.userType == 'tester') {
         Navigator.pop(context);
-        openDialog(context, 'You are a Tester', 'Only admin can add contents');
+        openDialog(context, 'Bạn là Tester', 'Chỉ có admin mới có thể thêm nội dung');
       } else {
         await getTimestamp()
         .then((value) => addState())
         .then((value) => context.read<AdminBloc>().increaseCount('states_count'))
-        // .then((value) => openToast1(context, 'Added Successfully'))
         .then((value) => ab.getStates());
         refreshData();
         Navigator.pop(context);
@@ -389,16 +388,16 @@ class _CitiesPageState extends State<States> {
         return SimpleDialog(
             contentPadding: const EdgeInsets.all(100),
             children: <Widget>[
-              const Text('Add State/Division to Database', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
+              const Text('Thêm tỉnh/thành phố vào cơ sở dữ liệu', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
               const SizedBox(height: 50,),
               Form(
                 key: formKey,
                 child: Column(children: <Widget>[
                   TextFormField(
-                  decoration: inputDecoration('Enter State Name', 'State Name', nameCtrl),
+                  decoration: inputDecoration('Nhập tên tỉnh/thành phố', 'Tên tỉnh thành phố', nameCtrl),
                   controller: nameCtrl,
                   validator: (value) {
-                    if (value!.isEmpty) return 'State name is empty';
+                    if (value!.isEmpty) return 'Tên tỉnh/thành phố trống';
                     return null;
                     },
                   
@@ -409,10 +408,10 @@ class _CitiesPageState extends State<States> {
                   const SizedBox(height: 20,),
 
                   TextFormField(
-                  decoration: inputDecoration('Enter Thumbnail Url', 'Thumbnail Url', thumbnailCtrl),
+                  decoration: inputDecoration('Nhập URL Thumbnail', 'Thumbnail Url', thumbnailCtrl),
                   controller: thumbnailCtrl,
                   validator: (value) {
-                    if (value!.isEmpty) return 'Thumbnail url is empty';
+                    if (value!.isEmpty) return 'Thumbnail url trống';
                     return null;
                     },
                   
@@ -433,7 +432,7 @@ class _CitiesPageState extends State<States> {
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25)))),
                 child: const Text(
-                  'Add State/Division/City',
+                  'Thêm tỉnh/thành',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,

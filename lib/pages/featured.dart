@@ -69,7 +69,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
       }
     } else {
       setState(() => _isLoading = false);
-      openToast(context, 'No more content available');
+      openToast(context, 'Không còn nội dung nào nữa!');
     }
     return null;
 
@@ -90,12 +90,6 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
   }
 
 
-
-
-  
-
-
-
   reloadData (){
     setState(() {
       _isLoading = true;
@@ -106,7 +100,6 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
     _getData();
   }
 
-
   openFeaturedDialog (String timestamp) {
     final AdminBloc ab = Provider.of<AdminBloc>(context, listen: false);
     showDialog(
@@ -116,7 +109,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
             contentPadding: const EdgeInsets.all(50),
             elevation: 0,
             children: <Widget>[
-              const Text('Remove from Featured',
+              const Text('Xóa khỏi Nổi bật',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -124,7 +117,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
               const SizedBox(
                 height: 10,
               ),
-              Text('Do you want to remove this item from the featured list?',
+              Text('Bạn có muốn xóa mục này khỏi danh sách nổi bật không?',
                   style: TextStyle(
                       color: Colors.grey[900],
                       fontSize: 16,
@@ -145,7 +138,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                                     backgroundColor: MaterialStateProperty.all(Colors.purpleAccent)
                                     ),
                     child: const Text(
-                      'Yes',
+                      'Có',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -154,7 +147,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                     onPressed: () async {
                       if (ab.userType == 'tester') {
                         Navigator.pop(context);
-                        openDialog(context, 'You are a Tester', 'Only admin can do this');
+                        openDialog(context, 'Bạn là Tester', 'Chỉ có Admin mới được phép');
                       } else {
                         await context.read<AdminBloc>().removefromFeaturedList(context, timestamp);
                         reloadData();
@@ -171,7 +164,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                                     borderRadius: BorderRadius.circular(25))),
                                     backgroundColor: MaterialStateProperty.all(Colors.red)),
                     child: const Text(
-                      'No',
+                      'Không',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -205,7 +198,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Featured Places',
+              'Địa điểm nổi bật',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
             ),
           ],
@@ -229,12 +222,12 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                   return dataList(_data[index]);
                 }
                 return Center(
-                  child: new Opacity(
+                  child: Opacity(
                     opacity: _isLoading ? 1.0 : 0.0,
-                    child: new SizedBox(
+                    child: const SizedBox(
                         width: 32.0,
                         height: 32.0,
-                        child: new CircularProgressIndicator()),
+                        child: CircularProgressIndicator()),
                   ),
                 );
               },
@@ -387,7 +380,7 @@ class _FeaturedPlacesState extends State<FeaturedPlaces> {
                         child: TextButton.icon(
                             onPressed: () => openFeaturedDialog(d.timestamp),
                             icon: const Icon(LineIcons.removeFormat),
-                            label: const Text('Remove from featured')),
+                            label: const Text('Xóa khỏi danh sách nổi bật')),
                       ),
                       
                       

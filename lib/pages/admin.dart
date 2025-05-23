@@ -23,7 +23,7 @@ class _AdminPageState extends State<AdminPage> {
   Future handleChange () async {
     final ab = context.read<AdminBloc>();
     if (ab.userType == 'tester') {
-       openDialog(context, 'You are a Tester', 'Only Admin can upload, delete & modify contents');
+       openDialog(context, 'Bạn là Tester', 'Chỉ Admin mới có thể tải lên, xóa và sửa đổi nội dung');
     } else {
       if (formKey.currentState!.validate()) {
         formKey.currentState!.save();
@@ -32,7 +32,7 @@ class _AdminPageState extends State<AdminPage> {
         });
 
         await context.read<AdminBloc>().saveNewAdminPassword(passwordNewCtrl.text)
-            .then((value) => openDialog(context, 'Password has changed successfully!', ''));
+            .then((value) => openDialog(context, 'Mật khẩu đã được thay đổi thành công!', ''));
 
         setState(() {
           changeStarted = false;
@@ -62,7 +62,7 @@ class _AdminPageState extends State<AdminPage> {
           SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
           ),
-          const Text("Change Admin Password", style: TextStyle(
+          const Text("Đổi mật khẩu Admin", style: TextStyle(
             fontSize: 25, fontWeight: FontWeight.w800
           ),),
           Container(
@@ -82,21 +82,21 @@ class _AdminPageState extends State<AdminPage> {
               children: [
                 TextFormField(
                   controller: passwordOldCtrl,
-                  decoration: inputDecoration('Enter old password', 'Old Password', passwordOldCtrl),
+                  decoration: inputDecoration('Nhập mật khẩu cũ', 'Mật khẩu cũ', passwordOldCtrl),
                   validator: (String? value){
-                    if(value == null || value.isEmpty) return 'Old password is empty!';
-                    if(value != adminPass) return 'Old Password is wrong. Try again';
+                    if(value == null || value.isEmpty) return 'Mật khẩu cũ đang trống!';
+                    if(value != adminPass) return 'Mật khẩu cũ không đúng. Hãy thử lại';
                     return null;
                   },
                 ),
                 const SizedBox(height: 30,),
                 TextFormField(
                   controller: passwordNewCtrl,
-                  decoration: inputDecoration('Enter new password', 'New Password', passwordNewCtrl),
+                  decoration: inputDecoration('Nhập mật khẩu mới', 'Mật khẩu mới', passwordNewCtrl),
                   obscureText: true,
                   validator: (String? value){
-                    if(value == null || value.isEmpty) return 'New password is empty!';
-                    if(value == adminPass) return 'Please use a different password';
+                    if(value == null || value.isEmpty) return 'Mật khẩu mới đang trống!';
+                    if(value == adminPass) return 'Vui lòng sử dụng một mật khẩu khác';
                     return null;
                   },
 
@@ -114,7 +114,7 @@ class _AdminPageState extends State<AdminPage> {
                       ? Center(child: Container(height: 30, width: 30,child: const CircularProgressIndicator()),)
                       : TextButton(
                         child: const Text(
-                          'Update Password',
+                          'Cập nhật mật khẩu',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,

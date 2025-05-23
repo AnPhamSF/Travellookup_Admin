@@ -47,11 +47,11 @@ class _SignInPageState extends State<SignInPage> {
           
           height: 400,
           width: 600,
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(0),
-            boxShadow: <BoxShadow>[
+            boxShadow: const <BoxShadow>[
               BoxShadow(
                   color: Colors.grey, blurRadius: 10, offset: Offset(3, 3))
             ],
@@ -59,12 +59,12 @@ class _SignInPageState extends State<SignInPage> {
           child: Column(
             
             children: <Widget>[
-              SizedBox(height: 50,),
+              const SizedBox(height: 50,),
               
-              Text(Config().appName, style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
+              Text(Config().appName, style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
 
-              Text('Welcome to Admin Panel', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
-              SizedBox(height: 50,),
+              const Text('Chào mừng đến với Admin Panel', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+              const SizedBox(height: 50,),
               Padding(
                 padding: const EdgeInsets.only(left: 40, right: 40),
                 child: Form(
@@ -73,16 +73,16 @@ class _SignInPageState extends State<SignInPage> {
                   controller: passwordCtrl,
                   obscureText: true,
                   decoration: InputDecoration(
-                  hintText: 'Enter Password',
-                  border: OutlineInputBorder(),
+                  hintText: 'Nhập Password',
+                  border: const OutlineInputBorder(),
                   labelText: 'Password',
-                  contentPadding: EdgeInsets.only(right: 0, left: 10),
+                  contentPadding: const EdgeInsets.only(right: 0, left: 10),
                   suffixIcon: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CircleAvatar(
                       radius: 15,
                       backgroundColor: Colors.grey[300],
-                      child: IconButton(icon: Icon(Icons.close, size: 15), onPressed: (){
+                      child: IconButton(icon: const Icon(Icons.close, size: 15), onPressed: (){
                         passwordCtrl.clear();
                       }),
                     ),
@@ -92,9 +92,9 @@ class _SignInPageState extends State<SignInPage> {
                 validator: (String? value) {
                   String? adminPassword = ab.adminPass;
                   if (value == null || value.isEmpty) {
-                    return "Password can't be empty";
+                    return "Mật khẩu không được để trống";
                   } else if (value != adminPassword && value != Config().testerPassword) {
-                    return 'Wrong Password! Please try again.';
+                    return 'Mật khẩu sai! Vui lòng thử lại.';
                   }
                   return null;
                 },
@@ -105,14 +105,14 @@ class _SignInPageState extends State<SignInPage> {
                 },
                 )),
               ),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
               Container(
             height: 45,
             width: 200,
             decoration: BoxDecoration(
             color: Colors.deepPurpleAccent,
             borderRadius: BorderRadius.circular(30),
-            boxShadow: <BoxShadow>[
+            boxShadow: const <BoxShadow>[
               BoxShadow(
                 color: Colors.grey,
                 blurRadius: 10,
@@ -130,8 +130,8 @@ class _SignInPageState extends State<SignInPage> {
                   )
                 )
               ),
-              icon: Icon(LineIcons.arrowRight, color: Colors.white, size: 25,),
-              label: Text('Sign In', style: TextStyle(fontWeight: FontWeight.w400, color: Colors.white, fontSize: 16),),
+              icon: const Icon(LineIcons.arrowRight, color: Colors.white, size: 25,),
+              label: const Text('Đăng nhập', style: TextStyle(fontWeight: FontWeight.w400, color: Colors.white, fontSize: 16),),
               onPressed: () => handleSignIn(), 
               ),
           ),

@@ -41,14 +41,14 @@ class _UploadBlogState extends State<UploadBlog> {
       if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       if (ab.userType == 'tester') {
-        openDialog(context, 'You are a Tester', 'Only Admin can upload, delete & modify contents');
+        openDialog(context, 'Bạn là Tester', 'Chỉ có Admin mới có thể tải lên, xóa và sửa đổi nội dung');
       } else {
         setState(()=> uploadStarted = true);
         await getDate().then((_) async{
           await saveToDatabase()
           .then((value) => context.read<AdminBloc>().increaseCount('blogs_count'));
           setState(()=> uploadStarted = false);
-          openDialog(context, 'Uploaded Successfully', '');
+          openDialog(context, 'Đã tải lên thành công', '');
           clearTextFeilds();
           
           
@@ -129,58 +129,58 @@ class _UploadBlogState extends State<UploadBlog> {
                 SizedBox(
                   height: h * 0.10,
                 ),
-                Text(
-                  'Blog Details',
+                const Text(
+                  'Chi tiết Blog',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
                 ),
 
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
                 TextFormField(
-                  decoration: inputDecoration('Enter Title', 'Title', titleCtrl),
+                  decoration: inputDecoration('Nhập tiêu đề', 'Tiêu đề', titleCtrl),
                   controller: titleCtrl,
                   validator: (value) {
-                    if (value!.isEmpty) return 'Value is empty';
+                    if (value!.isEmpty) return 'Không để trống';
                     return null;
                   },
                   
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
 
                 TextFormField(
-                  decoration: inputDecoration('Enter Image Url', 'Image', imageUrlCtrl),
+                  decoration: inputDecoration('Nhập URL hình ảnh', 'Hình ảnh', imageUrlCtrl),
                   controller: imageUrlCtrl,
                   validator: (value) {
-                    if (value!.isEmpty) return 'Value is empty';
+                    if (value!.isEmpty) return 'Không để trống';
                     return null;
                   },
                   
                 ),
                 
                 
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
 
                 TextFormField(
-                  decoration: inputDecoration('Enter Source Url', 'Source Url', sourceCtrl),
+                  decoration: inputDecoration('Nhập URL nguồn', 'URL nguồn', sourceCtrl),
                   controller: sourceCtrl,
                   validator: (value) {
-                    if (value!.isEmpty) return 'Value is empty';
+                    if (value!.isEmpty) return 'Không để trống';
                     return null;
                   },
                 ),
                 
                 
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
 
 
                 TextFormField(
                   decoration: InputDecoration(
-                      hintText: 'Enter Description (Html or Normal Text)',
-                      border: OutlineInputBorder(),
-                      labelText: 'Description',
-                      contentPadding: EdgeInsets.only(
+                      hintText: 'Nhập mô tả (Html hoặc Văn bản thường)',
+                      border: const OutlineInputBorder(),
+                      labelText: 'Mô tả',
+                      contentPadding: const EdgeInsets.only(
                           right: 0, left: 10, top: 15, bottom: 5),
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -188,7 +188,7 @@ class _UploadBlogState extends State<UploadBlog> {
                           radius: 15,
                           backgroundColor: Colors.grey[300],
                           child: IconButton(
-                              icon: Icon(Icons.close, size: 15),
+                              icon: const Icon(Icons.close, size: 15),
                               onPressed: () {
                                 descriptionCtrl.clear();
                               }),
@@ -200,13 +200,13 @@ class _UploadBlogState extends State<UploadBlog> {
                   keyboardType: TextInputType.multiline,
                   controller: descriptionCtrl,
                   validator: (value) {
-                    if (value!.isEmpty) return 'Value is empty';
+                    if (value!.isEmpty) return 'Không để trống';
                     return null;
                   },
                   
                 ),
 
-                SizedBox(height: 100,),
+                const SizedBox(height: 100,),
 
 
                   Row(
@@ -215,28 +215,28 @@ class _UploadBlogState extends State<UploadBlog> {
                         
                         TextButton.icon(
                           
-                          icon: Icon(Icons.remove_red_eye, size: 25, color: Colors.blueAccent,),
-                          label: Text('Preview', style: TextStyle(
+                          icon: const Icon(Icons.remove_red_eye, size: 25, color: Colors.blueAccent,),
+                          label: const Text('Xem trước', style: TextStyle(
                             fontWeight: FontWeight.w400,
                             color: Colors.black
                           ),),
                           onPressed: (){
-                            //handlePreview();
+                            handlePreview();
                           }
                         )
                       ],
                     ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
                     color: Colors.deepPurpleAccent,
                     height: 45,
                     child: uploadStarted == true
-                      ? Center(child: Container(height: 30, width: 30,child: CircularProgressIndicator()),)
+                      ? Center(child: Container(height: 30, width: 30,child: const CircularProgressIndicator()),)
                       : TextButton(
-                        child: Text(
-                          'Upload Blog',
+                        child: const Text(
+                          'Tải lên Blog',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -248,7 +248,7 @@ class _UploadBlogState extends State<UploadBlog> {
                         })
                       
                       ),
-                SizedBox(
+                const SizedBox(
                   height: 200,
                 ),
               ],

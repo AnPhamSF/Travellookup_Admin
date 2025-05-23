@@ -7,10 +7,10 @@ import '/pages/blogs.dart';
 import '/pages/data_info.dart';
 import '/pages/featured.dart';
 import '/pages/notifications.dart';
- import '/pages/places.dart';
+import '/pages/places.dart';
 //import '/pages/settings.dart';
 import '/pages/sign_in.dart';
- import '/pages/states.dart';
+import '/pages/states.dart';
 import '/pages/upload_blog.dart';
 import '/pages/upload_place.dart';
 import '/pages/users.dart';
@@ -34,17 +34,17 @@ class _HomePageState extends State<HomePage>
   int _pageIndex = 0;
 
   final List<String> titles = [
-    'Dashboard',
-    'Places',
-    'Featured Places',
-    'Upload Place',
+    'Tổng Quan',
+    'Địa điểm',
+    'Địa điểm nổi bật',
+    'Tải lên địa điểm',
     'Blogs',
-    'Upload Blog',
-    'States',
-    'Notifications',
+    'Tải lên Blog',
+    'Tỉnh/Thành Phố',
+    'Thông báo',
     'Users',
     'Admin',
-    'Settings'
+    //'Settings'
   ];
 
   final List icons = [
@@ -58,20 +58,20 @@ class _HomePageState extends State<HomePage>
     LineIcons.bell,
     LineIcons.users,
     LineIcons.userSecret,
-    LineIcons.chair
+    //LineIcons.chair
   ];
 
   Future handleLogOut() async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
     await sp
         .clear()
-        .then((value) => nextScreenCloseOthers(context, SignInPage()));
+        .then((value) => nextScreenCloseOthers(context, const SignInPage()));
   }
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 0)).then((value) {
+    Future.delayed(const Duration(milliseconds: 0)).then((value) {
       context.read<AdminBloc>().getStates();
       //context.read<AdminBloc>().getAdsData();
     });
@@ -82,11 +82,11 @@ class _HomePageState extends State<HomePage>
     final AdminBloc ab = Provider.of<AdminBloc>(context, listen: false);
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(80),
+          preferredSize: const Size.fromHeight(80),
           child: Container(
             height: 60,
-            padding: EdgeInsets.only(left: 20, right: 20),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: <BoxShadow>[
                   BoxShadow(
@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage>
               children: <Widget>[
                 RichText(
                     text: TextSpan(
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w900,
                             color: Colors.deepPurpleAccent,
@@ -111,17 +111,17 @@ class _HomePageState extends State<HomePage>
                               color: Colors.grey[800],
                               fontFamily: 'Muli'))
                     ])),
-                Spacer(),
+                const Spacer(),
                 Container(
-                  margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.only(
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.only(
                     left: 10,
                     right: 10,
                   ),
                   decoration: BoxDecoration(
                       color: Colors.deepPurpleAccent,
                       borderRadius: BorderRadius.circular(20),
-                      boxShadow: <BoxShadow>[
+                      boxShadow: const <BoxShadow>[
                         BoxShadow(
                             color: Colors.grey,
                             blurRadius: 10,
@@ -133,13 +133,13 @@ class _HomePageState extends State<HomePage>
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)))),
-                    icon: Icon(
+                    icon: const Icon(
                       LineIcons.alternateSignOut,
                       color: Colors.white,
                       size: 20,
                     ),
-                    label: Text(
-                      'Logout',
+                    label: const Text(
+                      'Đăng xuất',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Colors.white,
@@ -148,12 +148,12 @@ class _HomePageState extends State<HomePage>
                     onPressed: () => handleLogOut(),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Container(
-                  margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.only(left: 10, right: 10),
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.deepPurpleAccent),
                     borderRadius: BorderRadius.circular(20),
@@ -170,16 +170,18 @@ class _HomePageState extends State<HomePage>
                       size: 20,
                     ),
                     label: Text(
-                      'Signed as ${ab.userType}',
-                      style: TextStyle(
+                      'Đăng nhập bằng ${ab.userType}',
+                      style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Colors.deepPurpleAccent,
                           fontSize: 16),
                     ),
-                    onPressed: () => null,
+                    onPressed: () {
+
+                    },
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 )
               ],
@@ -212,25 +214,25 @@ class _HomePageState extends State<HomePage>
                     Tab(child: tab(titles[2], icons[2])),
                     Tab(child: tab(titles[3], icons[3])),
                     Tab(child: tab(titles[4], icons[4])),
-                     Tab(child: tab(titles[5], icons[5])),
-                     Tab(child: tab(titles[6], icons[6])),
-                     Tab(child: tab(titles[7], icons[7])),
-                     Tab(child: tab(titles[8], icons[8])),
+                    Tab(child: tab(titles[5], icons[5])),
+                    Tab(child: tab(titles[6], icons[6])),
+                    Tab(child: tab(titles[7], icons[7])),
+                    Tab(child: tab(titles[8], icons[8])),
                     Tab(child: tab(titles[9], icons[9])),
                     //Tab(child: tab(titles[10], icons[10])),
                   ],
                   contents: <Widget>[
-                    DataInfoPage(),
-                    CoverWidget(widget: PlacesPage()),
-                    CoverWidget(widget: FeaturedPlaces()),
+                    const DataInfoPage(),
+                    const CoverWidget(widget: PlacesPage()),
+                    const CoverWidget(widget: FeaturedPlaces()),
                     CoverWidget(widget: UploadPlace()),
-                    CoverWidget(widget: BlogPage()),
+                    const CoverWidget(widget: BlogPage()),
                      CoverWidget(widget: UploadBlog()),
-                     CoverWidget(widget: States()),
-                     CoverWidget(widget: Notifications()),
-                     CoverWidget(widget: UsersPage()),
-                    CoverWidget(widget: AdminPage()),
-                    //CoverWidget(widget: Settings())
+                     const CoverWidget(widget: States()),
+                     const CoverWidget(widget: Notifications()),
+                     const CoverWidget(widget: UsersPage()),
+                    const CoverWidget(widget: AdminPage()),
+                    //const CoverWidget(widget: Settings())
                     
                   ],
                 )
@@ -245,7 +247,7 @@ class _HomePageState extends State<HomePage>
   Widget tab(title, icon) {
     return Tab(
         child: Container(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 10,
       ),
       height: 45,
@@ -257,7 +259,7 @@ class _HomePageState extends State<HomePage>
             size: 20,
             color: Colors.grey[800],
           ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           Text(

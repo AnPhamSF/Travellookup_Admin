@@ -45,9 +45,9 @@ class _DataInfoPageState extends State<DataInfoPage> {
               FutureBuilder(
                 future: users,
                 builder: (BuildContext context, AsyncSnapshot snap) {
-                  if (!snap.hasData) return card('TOTAL USERS', 0);
-                  if (snap.hasError) return card('TOTAL USERS', 0);
-                  return card('TOTAL USERS', snap.data);
+                  if (!snap.hasData) return card('TỔNG USERS', 0);
+                  if (snap.hasError) return card('TỔNG USERS', 0);
+                  return card('TỔNG USERS', snap.data);
                 },
               ),
               const SizedBox(
@@ -56,9 +56,9 @@ class _DataInfoPageState extends State<DataInfoPage> {
               FutureBuilder(
                 future: places,
                 builder: (BuildContext context, AsyncSnapshot snap) {
-                  if (!snap.hasData) return card('TOTAL PLACES', 0);
-                  if (snap.hasError) return card('TOTAL PLACES', 0);
-                  return card('TOTAL PLACES', snap.data);
+                  if (!snap.hasData) return card('TỔNG ĐỊA ĐIỂM', 0);
+                  if (snap.hasError) return card('TỔNG ĐỊA ĐIỂM', 0);
+                  return card('TỔNG ĐỊA ĐIỂM', snap.data);
                 },
               ),
               const SizedBox(
@@ -67,9 +67,9 @@ class _DataInfoPageState extends State<DataInfoPage> {
               FutureBuilder(
                 future: blogs,
                 builder: (BuildContext context, AsyncSnapshot snap) {
-                  if (!snap.hasData) return card('TOTAL BLOGS', 0);
-                  if (snap.hasError) return card('TOTAL BLOGS', 0);
-                  return card('TOTAL BLOGS', snap.data);
+                  if (!snap.hasData) return card('TỔNG BLOGS', 0);
+                  if (snap.hasError) return card('TỔNG BLOGS', 0);
+                  return card('TỔNG BLOGS', snap.data);
                 },
               ),
             ],
@@ -83,9 +83,9 @@ class _DataInfoPageState extends State<DataInfoPage> {
               FutureBuilder(
                 future: notifications,
                 builder: (BuildContext context, AsyncSnapshot snap) {
-                  if (!snap.hasData) return card('TOTAL NOTIFICATIONS', 0);
-                  if (snap.hasError) return card('TOTAL NOTIFICATIONS', 0);
-                  return card('TOTAL NOTIFICATIONS', snap.data);
+                  if (!snap.hasData) return card('TỔNG THÔNG BÁO', 0);
+                  if (snap.hasError) return card('TỔNG THÔNG BÁO', 0);
+                  return card('TỔNG THÔNG BÁO', snap.data);
                 },
               ),
 
@@ -96,10 +96,10 @@ class _DataInfoPageState extends State<DataInfoPage> {
               StreamBuilder(
                 stream: FirebaseFirestore.instance.collection('featured').doc('featured_list').snapshots(),
                 builder: (context, AsyncSnapshot snap) {
-                  if (!snap.hasData) return card('FEATURED ITEMS', 0);
-                  if (snap.hasError) return card('FEATURED ITEMS', 0);
+                  if (!snap.hasData) return card('ĐỊA ĐIỂM NỔI BẬT', 0);
+                  if (snap.hasError) return card('ĐỊA ĐIỂM NỔI BẬT', 0);
                   return card(
-                      'FEATURED ITEMS', snap.data['places'].length);
+                      'ĐỊA ĐIỂM NỔI BẬT', snap.data['places'].length);
                 },
               ),
 
@@ -110,9 +110,9 @@ class _DataInfoPageState extends State<DataInfoPage> {
               FutureBuilder(
                 future: states,
                 builder: (BuildContext context, AsyncSnapshot snap) {
-                  if (!snap.hasData) return card('TOTAL STATES', 0);
-                  if (snap.hasError) return card('TOTAL STATES', 0);
-                  return card('TOTAL STATES', snap.data);
+                  if (!snap.hasData) return card('TỔNG TỈNH/THÀNH PHỐ', 0);
+                  if (snap.hasError) return card('TỔNG TỈNH/THÀNH PHỐ', 0);
+                  return card('TỔNG TỈNH/THÀNH PHỐ', snap.data);
                 },
               ),
             ],
@@ -130,8 +130,8 @@ class _DataInfoPageState extends State<DataInfoPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(0),
-        boxShadow: <BoxShadow>[
-          const BoxShadow(
+        boxShadow: const <BoxShadow>[
+          BoxShadow(
               color: Colors.grey, blurRadius: 10, offset: Offset(3, 3))
         ],
       ),
